@@ -97,23 +97,25 @@ const Profile = () => {
                 alt=""
                 className="profileCoverImage"
               />
-              <button
-                data-tooltip="Change Cover Image"
-                className="addCoverImage addProfile"
-                value="cover"
-                htmlFor="cover"
-                onClick={updateProfile}
-              >
-                <Add />
-                <input
-                  style={{ display: "none" }}
-                  type="file"
-                  id="cover"
-                  name="file"
-                  accept=".png, .jpg, .jpeg"
-                  onChange={(e) => setFile(e.target.files[0])}
-                />
-              </button>
+              <form className="changeProfileBottom" onSubmit={updateProfile}>
+                <div className="changeProfileOptions">
+                  <label htmlFor="cover" className="changeProfileOption">
+                    <Add
+                      data-tooltip="Change Cover Image"
+                      className="addCoverImage addProfile"
+                      htmlColor="tomato"
+                    />
+                    <input
+                      style={{ display: "none" }}
+                      type="file"
+                      id="cover"
+                      name="file"
+                      accept=".png, .jpg, .jpeg"
+                      onChange={coverImageHandler}
+                    />
+                  </label>
+                </div>
+              </form>
               <img
                 src={
                   user.profilePicture
@@ -130,7 +132,6 @@ const Profile = () => {
                     <Add
                       data-tooltip="Change Profile Image"
                       className="addProfileImage addProfile"
-                      value="profile"
                       htmlColor="tomato"
                     />
                     <input
