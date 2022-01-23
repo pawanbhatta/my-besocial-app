@@ -24,11 +24,15 @@ const postRoutes = require("./routes/posts");
 // const imageRoutes = require("./routes/images");
 
 // Create mongo connection
-mongoose.connect(MONGO_URL, {
-  useUnifiedTopology: true,
-  useNewUrlParser: true,
-  useFindAndModify: false,
-});
+mongoose.connect(
+  MONGO_URL,
+  {
+    useUnifiedTopology: true,
+    useNewUrlParser: true,
+    useFindAndModify: false,
+  },
+  () => console.log("connected to DB")
+);
 const conn = mongoose.createConnection(MONGO_URL);
 
 // Init gfs
@@ -153,8 +157,6 @@ app.get("/api/images", (req, res) => {
           err: "No files exist",
         });
       }
-
-      console.log("files", files);
 
       let results = files.filter(
         (file) => file.metadata.username == req.query.username

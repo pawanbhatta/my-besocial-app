@@ -7,12 +7,14 @@ let refreshTokens = [];
 
 const generateAccessToken = (user) => {
   return jwt.sign({ id: user._id, email: user.email }, "myjsonsecret", {
-    expiresIn: "15m",
+    expiresIn: "60m",
   });
 };
 
 const generateRefreshToken = (user) => {
-  return jwt.sign({ id: user._id, email: user.email }, "myrefreshjsonsecret");
+  return jwt.sign({ id: user._id, email: user.email }, "myrefreshjsonsecret", {
+    expiresIn: "60m",
+  });
 };
 
 const authController = {
@@ -23,15 +25,11 @@ const authController = {
       const hashedPassword = await bcrypt.hash(req.body.password, salt);
 
       const userExist = await User.findOne({ email: req.body.email });
-      console.log("user exist", userExist);
-      if (userExist) {
-        // throw Error("User with given email already exists");
-        return next(
-          CustomErrorHandler.alreadyExist(
-            "User with given email already exists"
-          )
-        );
-      }
+
+      if (userExist)
+        throw res
+          .status(409)
+          .send(`User with Email : ${req.body.email} already exists!`);
 
       // CREATE NEW USER
       const newUser = new User({
@@ -50,24 +48,15 @@ const authController = {
 
       return res.status(200).json({ user, accessToken, refreshToken });
     } catch (error) {
-      console.log("error :>> ", error);
-      // throw Error(error);
-
-      // return next(CustomErrorHandler.serverError());
+      res.status(500).send("Server Error");
     }
   },
 
   login: async (req, res, next) => {
-    console.log("logni here");
     try {
-      console.log("req.body login", req.body);
       const user = await User.findOne({ email: req.body.email });
 
-      console.log("user found", user);
-      if (!user)
-        return next(
-          CustomErrorHandler.notFound("User with given username Not Found")
-        );
+      if (!user) throw res.status(401).send("Wrong Credentials Provided!!");
 
       const validPassword = await bcrypt.compare(
         req.body.password,
@@ -75,7 +64,9 @@ const authController = {
       );
 
       if (!validPassword)
-        return next(CustomErrorHandler.wrongCredentials(400, "Wrong Password"));
+        throw res.status(401).send("Password didn't match! Try again");
+
+      // return next(CustomErrorHandler.wrongCredentials(400, "Wrong Password"));
 
       const accessToken = generateAccessToken(user);
       const refreshToken = generateRefreshToken(user);
@@ -84,8 +75,9 @@ const authController = {
 
       return res.status(200).json({ user, accessToken, refreshToken });
     } catch (error) {
-      console.log("error :>> ", error);
-      return next(new CustomErrorHandler.serverError());
+      // console.log("error :>> ", error);
+      // return next(new CustomErrorHandler.serverError());
+      res.status(500).json("Server Error Occurred");
     }
   },
 
@@ -116,7 +108,7 @@ const authController = {
         refreshToken: newRefreshToken,
       });
     } catch (err) {
-      return next(CustomErrorHandler.serverError(err));
+      res.status(500).send("Server Error");
     }
   },
 

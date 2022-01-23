@@ -12,7 +12,6 @@ function Feed() {
 
   useEffect(() => {
     const fetchPosts = async () => {
-      console.log("username", username);
       const res = username
         ? await axios.get("/posts/profile/" + username, {
             headers: { authorization: "Bearer " + accessToken },
@@ -27,7 +26,7 @@ function Feed() {
       );
     };
     fetchPosts();
-  }, [username, user._id]);
+  }, [username, user._id, accessToken, user.email]);
 
   return (
     <div className="feed">

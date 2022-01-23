@@ -40,7 +40,7 @@ function Post({ post }) {
 
   useEffect(() => {
     axios
-      .get(`/users?userId=${post.userId}`)
+      .get(`/users/profile?userId=${post.userId}`)
       .then((res) => setUser(res.data))
       .catch((err) => console.log("Error Occurred ", err));
   }, [post.userId]);
@@ -61,7 +61,9 @@ function Post({ post }) {
                 alt=""
               />
             </Link>
-            <span className="postUsername">{user.username}</span>
+            <Link to={`profile/${user.username}`}>
+              <span className="postUsername">{user.username}</span>
+            </Link>
             <span className="postDate">{format(post.createdAt)}</span>
           </div>
           <div className="postTopRight">

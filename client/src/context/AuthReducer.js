@@ -10,14 +10,12 @@ const AuthReducer = (state, action) => {
       };
 
     case "LOGIN_SUCCESS":
-      console.log("got here");
-      console.log(state, "action here", action.payload);
       return {
         user: action.payload.user,
         accessToken: action.payload.accessToken,
         refreshToken: action.payload.refreshToken,
         isFetching: false,
-        error: false,
+        error: "",
       };
 
     case "LOGIN_FAILURE":
@@ -65,11 +63,9 @@ const AuthReducer = (state, action) => {
 
     case "REFRESH_SUCCESS":
       return {
-        user: action.payload.user,
+        ...state,
         accessToken: action.payload.accessToken,
         refreshToken: action.payload.refreshToken,
-        isFetching: false,
-        error: false,
       };
 
     case "REFRESH_FAILURE":

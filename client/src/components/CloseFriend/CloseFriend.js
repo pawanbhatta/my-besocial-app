@@ -6,10 +6,15 @@ function Friend({ user }) {
   return (
     <li className="sidebarFriend">
       <img
-        src={PF + user.profilePicture}
+        src={
+          user.profilePicture
+            ? PF + user.profilePicture
+            : PF + "person/NoAvatarProfile.png"
+        }
         className="sidebarFriendImage"
         alt="CloseFriendImage"
       />
+
       <span className="sidebarFriendName">{user.username}</span>
     </li>
   );

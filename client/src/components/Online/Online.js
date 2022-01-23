@@ -7,7 +7,11 @@ function Online({ user }) {
     <li className="rightbarFriend">
       <div className="rightbarProfileImageContainer">
         <img
-          src={PF + user.profilePicture}
+          src={
+            user.profilePicture
+              ? PF + user.profilePicture
+              : PF + "person/NoAvatarProfile.png"
+          }
           alt=""
           className="rightbarProfileImage"
         />

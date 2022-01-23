@@ -11,7 +11,6 @@ const fsStorage = new GridFsStorage({
   url: MONGO_URL,
   file: (req, file) => {
     const { username, type, postId } = req.query;
-    console.log("this is  storage", req.query);
 
     let filename =
       type + "." + username + Date.now() + path.extname(file.originalname);

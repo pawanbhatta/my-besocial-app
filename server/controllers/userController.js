@@ -65,11 +65,28 @@ const userController = {
       const friends = await Promise.all(
         user.followings.map((friendId) => {
           return User.findById(friendId).select(
-            "-_v -password -isAdmin -createdAt -updatedAt -followings -followers"
+            "-_v -password -isAdmin -createdAt -updatedAt"
           );
         })
       );
       res.status(200).json(friends);
+    } catch (error) {
+      res.status(500).json(error);
+    }
+  },
+
+  getAllUsers: async (req, res) => {
+    try {
+      const username = req.query.username;
+
+      const allUsers = await User.find().select(
+        "-_v -password -isAdmin -createdAt -updatedAt"
+      );
+
+      const users = await Promise.all(
+        allUsers.filter((user) => user.username !== username)
+      );
+      res.status(200).json(users);
     } catch (error) {
       res.status(500).json(error);
     }

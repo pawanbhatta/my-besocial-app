@@ -28,7 +28,7 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <Router>
         <Routes>
-          <Route path="/" element={accessToken ? <Home /> : <Register />} />
+          <Route path="/" element={accessToken ? <Home /> : <Login />} />
           <Route
             path="/login"
             element={accessToken ? <Navigate to="/" /> : <Login />}
@@ -39,7 +39,7 @@ function App() {
           />
           <Route
             path="/profile/:username"
-            element={accessToken ? <Profile /> : <Navigate to="/register" />}
+            element={accessToken ? <Profile /> : <Navigate to="/login" />}
           />
         </Routes>
       </Router>

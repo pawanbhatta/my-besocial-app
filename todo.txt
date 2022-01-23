@@ -1,18 +1,20 @@
-[+] Authentication
-[-] Register User     
-[-] Login User
-[+] Logout User
-[-] Create Post
-[+] Update Post
-[+] Delete Post
-[-] Like and Dislike Post
-[-] Follow and Unfollow User
-[+] Tag friends in post
-[+] Chat Messaging + Video Calling 
-[+] Notification System
-[+] Follow Request
-[+] Dark Mode 
-[+] Theme Change (Color)
+F-E B-E Feature
+[-] [-] Authentication
+[-] [-] Register User     
+[-] [-] Login User
+[-] [-] Logout User
+[-] [-] Create Post
+[+] [-] Update Post
+[+] [-] Delete Post
+[-] [-] Like and Dislike Post
+[-] [-] Follow and Unfollow User
+[+] [+] Tag friends in post
+[+] [+] Chat Messaging + Video Calling 
+[+] [+] Notification System
+[+] [+] Follow Request
+[+] [+] Settings Page
+[+] [+] Dark Mode 
+[+] [+] Theme Change (Color)
 
 SPECIAL FEATURES
 

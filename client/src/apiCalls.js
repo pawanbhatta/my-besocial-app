@@ -10,10 +10,10 @@ export const loginCall = async (userCredentials, dispatch) => {
   try {
     const { data } = await api.post("/auth/login", userCredentials);
     return data;
-    // dispatch({ type: "LOGIN_SUCCESS", payload: res.data });
+    // dispatch({ type: "LOGIN_SUCCESS", payload: data });
   } catch (err) {
-    throw Error(err.response.data.message);
-    // dispatch({ type: "LOGIN_FAILURE", payload: err.response.data.message });
+    throw err.response.data;
+    // dispatch({ type: "LOGIN_FAILURE", payload: err.response.data });
   }
 };
 
@@ -21,27 +21,21 @@ export const signupCall = async (userInfo, dispatch) => {
   // dispatch({ type: "SIGNUP_START" });
 
   try {
-    console.log("signup call", userInfo);
-    const res = await api.post("/auth/register", userInfo);
-    console.log("response data", res);
-    return res.data;
-    // dispatch({ type: "SIGNUP_SUCCESS", payload: res.data });
+    const { data } = await api.post("/auth/register", userInfo);
+    dispatch({ type: "SIGNUP_SUCCESS", payload: data });
   } catch (err) {
-    console.log("hhere", err);
-    throw Error(err);
-
-    // dispatch({ type: "SIGNUP_FAILURE", payload: err.response.data.message });
+    dispatch({ type: "SIGNUP_FAILURE", payload: err.response.data });
   }
 };
 
 export const refreshTokenCall = async (token, dispatch) => {
-  dispatch({ type: "REFRESH_TOKEN" });
+  // dispatch({ type: "REFRESH_TOKEN" });
 
   try {
     const res = await axios.post("/auth/refresh", token);
     dispatch({ type: "REFRESH_SUCCESS", payload: res.data });
   } catch (err) {
-    dispatch({ type: "REFRESH_FAILURE", payload: err.response.data.message });
+    dispatch({ type: "REFRESH_FAILURE", payload: err.response.data });
   }
 };
 

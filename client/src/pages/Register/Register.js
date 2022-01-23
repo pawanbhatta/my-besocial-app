@@ -1,35 +1,31 @@
 import { CircularProgress } from "@material-ui/core";
 // import axios from "axios";
-import React, { useContext, useRef } from "react";
+import React, { useContext, useRef, useState, useEffect } from "react";
 import { useToast } from "@chakra-ui/toast";
 import { useNavigate } from "react-router-dom";
 import { signupCall } from "../../apiCalls";
 import { AuthContext } from "../../context/AuthContext";
-import { useMutation } from "react-query";
-import { useCookies } from "react-cookie";
+// import { useMutation } from "react-query";
+// import { useCookies } from "react-cookie";
 import "./styles.css";
 
 function Register() {
-  const { isFetching, dispatch } = useContext(AuthContext);
+  const { isFetching, dispatch, error } = useContext(AuthContext);
   const toast = useToast();
-  const [, setCookie] = useCookies(["jwt", "user"]);
-  const { isLoading, error, isError, mutateAsync } = useMutation(
-    "register",
-    signupCall,
-    {
-      onSuccess: (data) => {
-        dispatch({ type: "REFRESH_SUCCESS", payload: data });
-        setCookie("jwt", data.accessToken, { secure: true, sameSite: "None" });
-        setCookie("user", data.user, { secure: true, sameSite: "None" });
-        navigate("/");
-      },
-    }
-  );
-
-  if (isError) {
-    console.log("error message", error.message);
-    toast({ title: error.message, status: "error" });
-  }
+  const [errorCall, setErrorCall] = useState(false);
+  // const [, setCookie] = useCookies(["jwt", "user"]);
+  // const { isLoading, error, isError, mutateAsync } = useMutation(
+  //   "register",
+  //   signupCall,
+  //   {
+  //     onSuccess: (data) => {
+  //       dispatch({ type: "REFRESH_SUCCESS", payload: data });
+  //       setCookie("jwt", data.accessToken, { secure: true, sameSite: "None" });
+  //       setCookie("user", data.user, { secure: true, sameSite: "None" });
+  //       navigate("/");
+  //     },
+  //   }
+  // );
 
   const username = useRef();
   const email = useRef();
@@ -52,12 +48,28 @@ function Register() {
         email: email.current.value,
         password: password.current.value,
       };
-      await mutateAsync(user);
-      // signupCall(user, dispatch);
-      // await axios.post("/auth/register", user);
-      // navigate("/login");
+
+      // await mutateAsync(user);
+      signupCall(user, dispatch);
+      if (user && !error) {
+        navigate("/login");
+      } else {
+        setErrorCall(!errorCall);
+        navigate("/register");
+      }
     }
   };
+
+  useEffect(() => {
+    if (error) {
+      toast({
+        title: error,
+        status: "error",
+        duration: 2000,
+        isClosable: true,
+      });
+    }
+  }, [errorCall]);
 
   return (
     <div className="login">
@@ -101,7 +113,7 @@ function Register() {
               className="loginInput"
             />
             <button
-              isloading={isLoading.toString()}
+              // isloading={isLoading.toString()}
               className="loginButton"
               type="submit"
               disabled={isFetching}

@@ -10,12 +10,16 @@ function Topbar() {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const navigate = useNavigate();
   const { user, dispatch } = useContext(AuthContext);
-  const [, , removeCookie] = useCookies(["jwt", "user"]);
+  const [, , removeCookie] = useCookies(["jwt", "user", "refreshToken"]);
 
   const logoutHandler = () => {
     removeCookie("jwt");
     removeCookie("user");
-    dispatch({ type: "ACCESS_TOKEN", payload: { jwt: "", user: null } });
+    removeCookie("refresh");
+    dispatch({
+      type: "ACCESS_TOKEN",
+      payload: { jwt: "", user: null, refreshToken: "" },
+    });
     navigate("/login");
   };
 
@@ -41,7 +45,9 @@ function Topbar() {
           <span className="topbarLink" onClick={logoutHandler}>
             Log Out
           </span>
-          <span className="topbarLink">{user.username}</span>
+          <Link to={`/profile/${user.username}`}>
+            <span className="topbarLink">{user.username}</span>
+          </Link>
         </div>
         <div className="topbarIcons">
           <div className="topbarIconItem">

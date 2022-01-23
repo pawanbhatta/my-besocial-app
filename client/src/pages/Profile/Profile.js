@@ -12,7 +12,7 @@ const Profile = () => {
   useEffect(() => {
     const fetchUser = () => {
       axios
-        .get(`/users?username=${username}`)
+        .get(`/users/profile?username=${username}`)
         .then((res) => {
           setUser(res.data);
         })

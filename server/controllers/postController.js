@@ -4,10 +4,8 @@ const User = require("../models/User");
 const postController = {
   create: async (req, res) => {
     try {
-      console.log("unsaved post", req.body);
       const newPost = new Post(req.body);
       const savedPost = await newPost.save();
-      console.log("saved post", savedPost);
       return res.status(200).json(savedPost);
     } catch (error) {
       return res.status(500).json(error);
@@ -91,7 +89,6 @@ const postController = {
       );
       res.status(200).json(userPosts.concat(...friendPosts));
     } catch (error) {
-      console.log("error", error);
       return res.status(500).json(error);
     }
   },

@@ -5,23 +5,35 @@ const User = require("../models/User");
 
 module.exports = isAuthenticated = async (req, res, next) => {
   try {
-    console.log("is authenticated");
-
-    const authHeader = req.headers.authorization;
-    console.log("auth header", authHeader);
+    const authHeader = req.headers.cookie;
 
     if (!authHeader)
       return next(
         CustomErrorHandler.unAuthenticated("You are not authenticated")
       );
 
-    const token = authHeader.split(" ")[1];
-    console.log("auth token", token);
+    function parseCookies(request) {
+      const list = {};
+      const cookieHeader = request.headers?.cookie;
+      if (!cookieHeader) return list;
 
-    const user = await jwt.verify(token, "myjsonsecret");
+      cookieHeader.split(`;`).forEach(function (cookie) {
+        let [name, ...rest] = cookie.split(`=`);
+        name = name?.trim();
+        if (!name) return;
+        const value = rest.join(`=`).trim();
+        if (!value) return;
+        list[name] = decodeURIComponent(value);
+      });
+
+      return list;
+    }
+
+    const cookies = parseCookies(req);
+
+    const user = await jwt.verify(cookies.jwt, "myjsonsecret");
     if (!user)
       return next(CustomErrorHandler.unAuthenticated("Token is invalid"));
-    console.log("auth user", user);
 
     const getUser = await User.findOne({ _id: user.id });
 

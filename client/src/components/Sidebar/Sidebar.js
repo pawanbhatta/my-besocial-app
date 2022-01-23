@@ -10,10 +10,25 @@ import {
   WorkOutline,
 } from "@material-ui/icons";
 import "./styles.css";
-import { Users } from "../../dummyData";
 import { CloseFriend } from "../index";
+import { useContext, useEffect } from "react";
+import axios from "axios";
+import { AuthContext } from "../../context/AuthContext";
+import { useState } from "react";
+import { Link } from "react-router-dom";
 
 function Sidebar() {
+  const { user } = useContext(AuthContext);
+  const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    const fetchUsers = async () => {
+      const res = await axios.get(`/users/all?username=${user.username}`);
+      setUsers(res.data);
+    };
+    fetchUsers();
+  }, []);
+
   return (
     <div className="sidebar">
       <div className="sidebarWrapper">
@@ -58,8 +73,10 @@ function Sidebar() {
         <button className="sidebarButton">Show More</button>
         <hr className="sidebarHr" />
         <ul className="sidebarFriendList">
-          {Users.map((u) => (
-            <CloseFriend key={u.id} user={u} />
+          {users.map((user) => (
+            <Link key={user.id} to={`profile/${user.username}`}>
+              <CloseFriend user={user} />
+            </Link>
           ))}
         </ul>
       </div>
