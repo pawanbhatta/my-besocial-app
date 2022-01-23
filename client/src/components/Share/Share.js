@@ -12,6 +12,8 @@ import axios from "axios";
 
 function Share() {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
+  const SI = process.env.REACT_APP_GET_IMAGES;
+
   const { user } = useContext(AuthContext);
 
   const desc = useRef();
@@ -43,7 +45,6 @@ function Share() {
         );
       } catch (error) {
         console.log(error);
-        document.alert(error);
       }
 
       try {
@@ -52,7 +53,6 @@ function Share() {
         window.location.reload();
       } catch (error) {
         console.log(error);
-        document.alert(error);
       }
     }
   };
@@ -64,7 +64,7 @@ function Share() {
           <img
             src={
               user.profilePicture
-                ? PF + user.profilePicture
+                ? SI + "download/" + user.profilePicture
                 : PF + "person/NoAvatarProfile.png"
             }
             alt=""

@@ -34,6 +34,51 @@
   border: 3px solid white;
 }
 
+.addProfileImage {
+  width: 40px;
+  height: 40px;
+  border: 3px solid whitesmoke;
+  outline: none;
+  border-radius: 50%;
+  background-color: rgb(224, 224, 224);
+  position: absolute;
+  left: 53%;
+  bottom: 7%;
+  margin: auto;
+  font-size: 25px;
+}
+
+.addCoverImage {
+  width: 40px;
+  height: 40px;
+  border: 3px solid whitesmoke;
+  outline: none;
+  border-radius: 50%;
+  background-color: rgb(224, 224, 224);
+  position: absolute;
+  right: 2%;
+  bottom: 26%;
+  margin: auto;
+  font-size: 25px;
+}
+
+.addProfile:hover::after {
+  content: attr(data-tooltip);
+  font-size: 15px;
+  position: absolute;
+  width: max-content;
+  bottom: -20px;
+  right: 0;
+  left: -60px;
+  opacity: 0.6;
+  color: gray;
+}
+
+.addProfile:hover {
+  opacity: 80%;
+  color: black;
+}
+
 .profileInfo {
   display: flex;
   flex-direction: column;
@@ -51,4 +96,37 @@
 
 .profileRightBottom {
   display: flex;
+}
+
+.changeProfileImgContainer {
+  padding: 5px;
+  position: relative;
+  width: 200px;
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+}
+
+.changeProfileImg {
+  width: 100%;
+  object-fit: contain;
+}
+
+.changeProfileCancelImg {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+  opacity: 0.7;
+}
+
+.changeButton {
+  border: none;
+  margin-top: 1px;
+  border-radius: 5px;
+  background-color: rgb(218, 201, 201);
+  font-weight: 300;
+  cursor: pointer;
+  color: white;
+  width: 100%;
 }

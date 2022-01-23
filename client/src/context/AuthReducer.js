@@ -61,6 +61,16 @@ const AuthReducer = (state, action) => {
         accessToken: action.payload.jwt,
       };
 
+    case "LOGOUT": {
+      return {
+        user: null,
+        accessToken: "",
+        refreshToken: "",
+        isFetching: false,
+        error: false,
+      };
+    }
+
     case "REFRESH_SUCCESS":
       return {
         ...state,

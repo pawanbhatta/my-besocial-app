@@ -28,14 +28,17 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <Router>
         <Routes>
-          <Route path="/" element={accessToken ? <Home /> : <Login />} />
+          <Route
+            path="/"
+            element={accessToken ? <Home /> : <Navigate to="/login" />}
+          />
           <Route
             path="/login"
             element={accessToken ? <Navigate to="/" /> : <Login />}
           />
           <Route
             path="/register"
-            element={accessToken ? <Navigate to="/" /> : <Register />}
+            element={accessToken ? <Home /> : <Register />}
           />
           <Route
             path="/profile/:username"

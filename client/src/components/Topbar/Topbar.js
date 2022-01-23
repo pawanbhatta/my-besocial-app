@@ -8,18 +8,20 @@ import { useCookies } from "react-cookie";
 
 function Topbar() {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
+  const SI = process.env.REACT_APP_GET_IMAGES;
+
   const navigate = useNavigate();
-  const { user, dispatch } = useContext(AuthContext);
-  const [, , removeCookie] = useCookies(["jwt", "user", "refreshToken"]);
+  const { user, dispatch, accessToken, refreshToken } = useContext(AuthContext);
+  const [, , removeCookie] = useCookies(["jwt", "user", "refresh"]);
 
   const logoutHandler = () => {
     removeCookie("jwt");
     removeCookie("user");
     removeCookie("refresh");
     dispatch({
-      type: "ACCESS_TOKEN",
-      payload: { jwt: "", user: null, refreshToken: "" },
+      type: "LOGOUT",
     });
+    console.log("logout", user, accessToken, refreshToken);
     navigate("/login");
   };
 
@@ -67,7 +69,7 @@ function Topbar() {
           <img
             src={
               user.profilePicture
-                ? PF + user.profilePicture
+                ? SI + "download/" + user.profilePicture
                 : PF + "person/NoAvatarProfile.png"
             }
             alt=""

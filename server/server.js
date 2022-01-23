@@ -41,7 +41,10 @@ let gfs;
 conn.once("open", () => {
   // Init stream
   gfs = Grid(conn.db, mongoose.mongo);
-  gfs.collection("PostImages");
+  // gfs.collection("PostImages");
+  // gfs.collection("PostImages");
+  // gfs.collection("ProfileImages");
+  gfs.collection("Images");
 });
 
 app.use("/images", express.static(path.join(__dirname, "public/images")));
@@ -53,6 +56,7 @@ const multer = require("multer");
 const fsStorage = new GridFsStorage({
   url: MONGO_URL,
   file: (req, file) => {
+    console.log("file got here");
     const { username, type, postId } = req.query;
 
     let filename =
@@ -61,19 +65,23 @@ const fsStorage = new GridFsStorage({
     let isCover = false;
     let isPost = false;
 
-    if (type == "post") {
-      isPost = true;
-      bucketName = "PostImages";
-    } else if (type == "profile") {
-      isProfile = true;
-      bucketName = "ProfileImages";
-    } else {
-      isCover = true;
-      bucketName = "CoverImages";
-    }
+    // GRIDFS cannot access multiple buckets at a time while showing or downloading image
+    // if (type == "post") {
+    //   isPost = true;
+    //   bucketName = "PostImages";
+    // } else if (type == "profile") {
+    //   isProfile = true;
+    //   bucketName = "ProfileImages";
+    // } else {
+    //   isCover = true;
+    //   bucketName = "CoverImages";
+    // }
+
+    let bucketName = "Images";
 
     return {
       filename,
+      type: req.query.type,
       bucketName,
       metadata: {
         bucketName,
@@ -131,20 +139,17 @@ const backupUpload = multer({ storage: backupStorage });
 
 // To upload an image
 // The second parameter to upload backup image doesnot work currently
-app.post(
-  "/api/upload",
-  [fsUpload.single("file"), backupUpload.single("file")],
-  async (req, res) => {
-    try {
-      return res.status(200).json({
-        message: "File uploaded successfully",
-        file: req.file,
-      });
-    } catch (error) {
-      console.log(error);
-    }
+app.post("/api/upload", [fsUpload.single("file")], async (req, res) => {
+  console.log("file uploaded");
+  try {
+    return res.status(200).json({
+      message: "File uploaded successfully",
+      file: req.file,
+    });
+  } catch (error) {
+    console.log(error);
   }
-);
+});
 
 // Get all post or profile or cover images of a perticular user
 app.get("/api/images", (req, res) => {
@@ -183,7 +188,9 @@ app.get("/api/images/info/:filename", async (req, res) => {
 
 // Display a single image
 app.get("/api/images/view/:filename", async (req, res) => {
+  console.log("filename", req.params.filename);
   let image = await gfs.files.findOne({ filename: req.params.filename });
+  console.log(image);
 
   // Check if image
   if (image.contentType === "image/jpeg" || image.contentType === "image/png") {
@@ -212,6 +219,7 @@ app.get("/api/images/view/:filename", async (req, res) => {
 
 // To download an image
 app.get("/api/images/download/:filename", async (req, res) => {
+  // const { username, type } = req.query;
   const image = await gfs.files.findOne({ filename: req.params.filename });
 
   if (!image) return res.status(404).json({ err: "No File Exists" });

@@ -25,6 +25,29 @@ const userController = {
     }
   },
 
+  updateProfile: async (req, res, next) => {
+    try {
+      const user = await User.findOne({ _id: req.params.id });
+      console.log("user", user);
+      req.query.type === "profile"
+        ? await user.update({
+            $set: {
+              profilePicture: req.body.profilePicture,
+              profileImageId: req.body.profileImageId,
+            },
+          })
+        : await user.update({
+            $set: {
+              coverPicture: req.body.coverPicture,
+              coverImageId: req.body.coverImageId,
+            },
+          });
+      res.status(200).json(user);
+    } catch (err) {
+      res.status(500).send("Server Error!!");
+    }
+  },
+
   delete: async (req, res) => {
     if (req.body.userId === req.params.id || req.body.isAdmin) {
       try {

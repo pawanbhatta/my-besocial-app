@@ -54,7 +54,7 @@ function Post({ post }) {
               <img
                 src={
                   user.profilePicture
-                    ? PF + user.profilePicture
+                    ? SI + "download/" + user.profilePicture
                     : PF + "person/NoAvatarProfile.png"
                 }
                 className="postProfileImage"

@@ -4,7 +4,7 @@ const isAuthenticated = require("../middlewares/auth");
 // const isPermitted = require("../middlewares/auth");
 
 // UPDATE USER
-router.put("/:id", [isAuthenticated], userController.update);
+router.put("/:id", [isAuthenticated], userController.updateProfile);
 
 // DELETE USER
 router.delete("/:id", [isAuthenticated], userController.delete);

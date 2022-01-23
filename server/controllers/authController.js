@@ -7,13 +7,13 @@ let refreshTokens = [];
 
 const generateAccessToken = (user) => {
   return jwt.sign({ id: user._id, email: user.email }, "myjsonsecret", {
-    expiresIn: "60m",
+    expiresIn: "120m",
   });
 };
 
 const generateRefreshToken = (user) => {
   return jwt.sign({ id: user._id, email: user.email }, "myrefreshjsonsecret", {
-    expiresIn: "60m",
+    expiresIn: "120m",
   });
 };
 
@@ -56,7 +56,8 @@ const authController = {
     try {
       const user = await User.findOne({ email: req.body.email });
 
-      if (!user) throw res.status(401).send("Wrong Credentials Provided!!");
+      if (!user)
+        throw res.status(401).send("User with this username doesnot exist.");
 
       const validPassword = await bcrypt.compare(
         req.body.password,

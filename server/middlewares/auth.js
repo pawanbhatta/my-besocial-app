@@ -40,7 +40,7 @@ module.exports = isAuthenticated = async (req, res, next) => {
     req.user = getUser;
     return next();
   } catch (err) {
-    return next(CustomErrorHandler.serverError(err));
+    res.status(500).send("Error while uploading profile image");
   }
 };
 

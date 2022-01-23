@@ -9,6 +9,8 @@ import { Link } from "react-router-dom";
 
 function HomeRightbar() {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
+  const SI = process.env.REACT_APP_GET_IMAGES;
+
   const { user } = useContext(AuthContext);
   const [friends, setFriends] = useState([]);
 
