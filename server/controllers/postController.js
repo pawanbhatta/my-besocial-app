@@ -18,13 +18,15 @@ const postController = {
       if (!post) throw res.status(404).send("Post not found");
 
       if (post.userId.toString() === req.user._id.toString()) {
-        console.log("before updating");
-        const res = await post.updateOne({
-          $set: { desc: req.body.desc, image: req.body.image },
-        });
-        console.log("after updating");
+        const data = await Post.findOneAndUpdate(
+          { _id: req.params.id },
+          {
+            $set: { desc: req.body.desc, image: req.body.image },
+          },
+          { returnOriginal: false }
+        );
 
-        return res.status(200).json({ message: "Post updated successfully" });
+        return res.status(200).json(data);
       } else {
         console.log("not allowed");
 

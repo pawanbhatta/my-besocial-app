@@ -16,6 +16,8 @@ F-E B-E Feature
 [+] [+] Theme Change (Color)
 [+] [+] Tag friends in post
 
+NOTE:::refresh token is yet to setup
+
 SPECIAL FEATURES
 
 [+] Usage Monitoring

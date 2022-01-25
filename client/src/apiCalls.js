@@ -63,3 +63,16 @@ export const unfollowCall = async (userIds, dispatch) => {
     );
   }
 };
+
+export const updatePostCall = async (info, dispatch) => {
+  try {
+    const { data } = await axios.put(`/posts/${info.postId}`, {
+      userId: info.userId,
+      desc: info.desc,
+      image: info.image,
+    });
+    return data;
+  } catch (error) {
+    dispatch({ type: "ERROR", payload: error.response.data });
+  }
+};

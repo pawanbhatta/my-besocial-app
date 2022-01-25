@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext, useRef } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Cancel, MoreVert } from "@material-ui/icons";
 import "./styles.css";
 import axios from "axios";
@@ -7,11 +7,14 @@ import { useToast } from "@chakra-ui/toast";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 import http from "http";
+import { updatePostCall } from "../../apiCalls";
 
 function Post({ post }) {
   const [like, setLike] = useState(post.likes.length);
   const [isLiked, setIsLiked] = useState(false);
+
   const [showOption, setShowOption] = useState(false);
+
   const [user, setUser] = useState({});
   const [isUpdating, setIsUpdating] = useState(false);
 
@@ -20,7 +23,9 @@ function Post({ post }) {
 
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const SI = process.env.REACT_APP_GET_IMAGES;
+
   const { user: currentUser, dispatch, error } = useContext(AuthContext);
+  const [currentPost, setCurrentPost] = useState(post);
 
   const toast = useToast();
 
@@ -69,12 +74,14 @@ function Post({ post }) {
     e.preventDefault();
     setIsUpdating(false);
     try {
-      await axios.put(`/posts/${post._id}`, {
+      const info = {
         userId: currentUser._id,
+        postId: post._id,
         desc,
         image: hasImage,
-      });
-      window.location.reload();
+      };
+      const newPost = await updatePostCall(info, dispatch);
+      setCurrentPost(newPost);
     } catch (err) {
       console.log(err);
       dispatch({ type: "ERROR", payload: err });
@@ -100,7 +107,8 @@ function Post({ post }) {
       .catch((err) => {
         console.log("Error Occurred ", err);
       });
-  }, [post.userId]);
+    setCurrentPost(post);
+  }, [post.userId, post]);
 
   return (
     <div className="post">
@@ -121,7 +129,7 @@ function Post({ post }) {
             <Link to={`profile/${user.username}`}>
               <span className="postUsername">{user.username}</span>
             </Link>
-            <span className="postDate">{format(post.createdAt)}</span>
+            <span className="postDate">{format(currentPost.createdAt)}</span>
           </div>
           <div className="postTopRight">
             <MoreVert
@@ -158,7 +166,11 @@ function Post({ post }) {
                 <div className="shareImgContainer">
                   <img
                     className="shareImg"
-                    src={post.image ? SI + "download/" + post.image : ""}
+                    src={
+                      currentPost.image
+                        ? SI + "download/" + currentPost.image
+                        : ""
+                    }
                     alt=""
                   />
                   <Cancel
@@ -173,9 +185,11 @@ function Post({ post }) {
             </form>
           ) : (
             <>
-              <span className="postText">{post?.desc}</span>
+              <span className="postText">{currentPost?.desc}</span>
               <img
-                src={post.image ? SI + "download/" + post.image : ""}
+                src={
+                  currentPost.image ? SI + "download/" + currentPost.image : ""
+                }
                 className="postImage"
                 alt=""
                 loading="lazy"
@@ -201,7 +215,9 @@ function Post({ post }) {
             <span className="postLikeCounter">{like} people liked it</span>
           </div>
           <div className="postBottomRight">
-            <div className="postCommentText">{post.comment} comments</div>
+            <div className="postCommentText">
+              {currentPost.comment} comments
+            </div>
           </div>
         </div>
       </div>
