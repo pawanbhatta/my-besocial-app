@@ -8,39 +8,57 @@ const postController = {
       const savedPost = await newPost.save();
       return res.status(200).json(savedPost);
     } catch (error) {
-      return res.status(500).json(error);
+      return res.status(500).send(error);
     }
   },
 
   update: async (req, res) => {
     try {
       const post = await Post.findById(req.params.id);
-      if (!post) return res.status(404).json("Post not found");
+      if (!post) throw res.status(404).send("Post not found");
 
-      if (post.userId === req.body.userId) {
-        const res = await post.updateOne({ $set: req.body });
-        return res.status(200).json("The post has been updated");
+      if (post.userId.toString() === req.user._id.toString()) {
+        console.log("before updating");
+        const res = await post.updateOne({
+          $set: { desc: req.body.desc, image: req.body.image },
+        });
+        console.log("after updating");
+
+        return res.status(200).json({ message: "Post updated successfully" });
       } else {
-        return res.status(403).json("You can update only your posts");
+        console.log("not allowed");
+
+        return res
+          .status(403)
+          .json({ error: "You can update only your posts" });
       }
     } catch (error) {
-      return res.status(500).json(error);
+      console.log("error in server");
+
+      throw res.status(500).send(error);
     }
   },
 
   delete: async (req, res) => {
     try {
       const post = await Post.findById(req.params.id);
-      if (!post) return res.status(404).json("Post not found");
+      if (!post) throw res.status(404).send("Post not found");
 
-      if (post.userId === req.body.userId) {
-        const res = await post.deleteOne();
+      console.log(
+        "equalize post",
+        post.userId.toString() === req.user._id.toString()
+      );
+      if (post.userId.toString() === req.user._id.toString()) {
+        console.log("here");
+        await post.remove();
         return res.status(200).json("The post has been deleted");
       } else {
-        return res.status(403).json("You can delete only your posts");
+        console.log("or here");
+        throw res.status(403).send("You can delete only your posts");
       }
     } catch (error) {
-      return res.status(500).json(error);
+      console.log("else hrer");
+      throw res.status(500).send(error);
     }
   },
 

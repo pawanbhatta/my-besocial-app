@@ -19,7 +19,6 @@ function App() {
   useEffect(() => {
     if (accessToken === "") {
       const { jwt, user } = cookies;
-
       if (jwt) dispatch({ type: "ACCESS_TOKEN", payload: { user, jwt } });
     }
   }, [dispatch, accessToken, cookies]);

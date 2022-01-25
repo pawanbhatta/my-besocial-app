@@ -74,7 +74,7 @@ function Sidebar() {
         <hr className="sidebarHr" />
         <ul className="sidebarFriendList">
           {users.map((user) => (
-            <Link key={user._id} to={`profile/${user.username}`}>
+            <Link key={user._id} to={`/profile/${user.username}`}>
               <CloseFriend user={user} />
             </Link>
           ))}

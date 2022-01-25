@@ -1,8 +1,9 @@
-import { useState, useEffect, useContext } from "react";
-import { MoreVert } from "@material-ui/icons";
+import { useState, useEffect, useContext, useRef } from "react";
+import { Cancel, MoreVert } from "@material-ui/icons";
 import "./styles.css";
 import axios from "axios";
 import { format } from "timeago.js";
+import { useToast } from "@chakra-ui/toast";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 import http from "http";
@@ -10,12 +11,18 @@ import http from "http";
 function Post({ post }) {
   const [like, setLike] = useState(post.likes.length);
   const [isLiked, setIsLiked] = useState(false);
+  const [showOption, setShowOption] = useState(false);
   const [user, setUser] = useState({});
-  // const [permit, setPermit] = useState(false);
+  const [isUpdating, setIsUpdating] = useState(false);
+
+  const [hasImage, setHasImage] = useState(post.image);
+  const [desc, setDesc] = useState(post.desc);
 
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const SI = process.env.REACT_APP_GET_IMAGES;
-  const { user: currentUser } = useContext(AuthContext);
+  const { user: currentUser, dispatch, error } = useContext(AuthContext);
+
+  const toast = useToast();
 
   const downloadImage = async () => {
     // alert("Do you want to download this image");
@@ -38,11 +45,61 @@ function Post({ post }) {
     setIsLiked(!isLiked);
   };
 
+  const deleteHandler = async (e) => {
+    setShowOption(false);
+    try {
+      await axios.delete(`/posts/${post._id}`, { userId: currentUser._id });
+      window.location.reload();
+    } catch (err) {
+      console.log(err);
+      dispatch({ type: "ERROR", payload: err });
+    }
+  };
+
+  const updateHandler = async () => {
+    setShowOption(false);
+    if (post.userId === currentUser._id) {
+      setIsUpdating(true);
+    } else {
+      dispatch({ type: "ERROR", payload: "You can update only your posts" });
+    }
+  };
+
+  const updatePost = async (e) => {
+    e.preventDefault();
+    setIsUpdating(false);
+    try {
+      await axios.put(`/posts/${post._id}`, {
+        userId: currentUser._id,
+        desc,
+        image: hasImage,
+      });
+      window.location.reload();
+    } catch (err) {
+      console.log(err);
+      dispatch({ type: "ERROR", payload: err });
+    }
+  };
+
+  useEffect(() => {
+    if (error) {
+      toast({
+        title: error,
+        status: "error",
+        duration: 2000,
+        isClosable: true,
+      });
+      dispatch({ type: "ERROR", payload: "" });
+    }
+  }, [toast, dispatch, error]);
+
   useEffect(() => {
     axios
       .get(`/users/profile?userId=${post.userId}`)
       .then((res) => setUser(res.data))
-      .catch((err) => console.log("Error Occurred ", err));
+      .catch((err) => {
+        console.log("Error Occurred ", err);
+      });
   }, [post.userId]);
 
   return (
@@ -67,19 +124,65 @@ function Post({ post }) {
             <span className="postDate">{format(post.createdAt)}</span>
           </div>
           <div className="postTopRight">
-            <MoreVert className="postTopIcon" />
+            <MoreVert
+              className="postTopIcon"
+              onClick={() => setShowOption(!showOption)}
+            />
+            {showOption ? (
+              <div className="options">
+                <span className="option" onClick={updateHandler}>
+                  Update
+                </span>
+                <span className="option" onClick={deleteHandler}>
+                  Delete
+                </span>
+                <hr />
+                <span className="option">More</span>
+              </div>
+            ) : (
+              ""
+            )}
           </div>
         </div>
         <div className="postCenter">
-          <span className="postText">{post?.desc}</span>
-          <img
-            src={post.image ? SI + "download/" + post.image : ""}
-            // src={post.image ? PF + post.image : ""}
-            className="postImage"
-            alt=" PostImage"
-            loading="lazy"
-            onClick={downloadImage}
-          />
+          {isUpdating ? (
+            <form onSubmit={updatePost}>
+              <input
+                onChange={(e) => setDesc(e.target.value)}
+                value={desc}
+                type="text"
+                id="desc"
+                className="shareInput"
+              />
+              {hasImage && (
+                <div className="shareImgContainer">
+                  <img
+                    className="shareImg"
+                    src={post.image ? SI + "download/" + post.image : ""}
+                    alt=""
+                  />
+                  <Cancel
+                    className="shareCancelImg"
+                    onClick={() => setHasImage("")}
+                  />
+                </div>
+              )}
+              <button className="updateButton" type="submit">
+                Update
+              </button>
+            </form>
+          ) : (
+            <>
+              <span className="postText">{post?.desc}</span>
+              <img
+                src={post.image ? SI + "download/" + post.image : ""}
+                className="postImage"
+                alt=""
+                loading="lazy"
+                onClick={downloadImage}
+              />
+            </>
+          )}
         </div>
         <div className="postBottom">
           <div className="postBottomLeft">

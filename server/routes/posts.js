@@ -13,10 +13,10 @@ router.get("/profile/:username", isAuthenticated, postController.profilePosts);
 router.post("/", isAuthenticated, postController.create);
 
 // UPDATE A POST
-router.put("/:id", [isAuthenticated], postController.update);
+router.put("/:id", isAuthenticated, postController.update);
 
 // DELETE A POST
-router.delete("/:id", [isAuthenticated], postController.delete);
+router.delete("/:id", isAuthenticated, postController.delete);
 
 // LIKE / DISLIKE A POST
 router.put("/:id/like", isAuthenticated, postController.react);

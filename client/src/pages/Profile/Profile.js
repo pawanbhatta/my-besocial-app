@@ -9,9 +9,9 @@ const Profile = () => {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const SI = process.env.REACT_APP_GET_IMAGES;
 
+  const { username } = useParams();
   const [user, setUser] = useState({});
   const [type, setType] = useState("");
-  const { username } = useParams();
 
   const [file, setFile] = useState(null);
 
@@ -58,9 +58,7 @@ const Profile = () => {
           ? (userProfile.profilePicture = savedImage.data.file.filename)
           : (userProfile.coverPicture = savedImage.data.file.filename);
         await axios.put(`/users/${user._id}?type=${type}`, userProfile);
-        console.log("before reload");
         window.location.reload();
-        console.log("after reload");
       } catch (error) {
         console.log(error);
       }
@@ -68,6 +66,7 @@ const Profile = () => {
   };
 
   useEffect(() => {
+    console.log("username", username);
     const fetchUser = () => {
       axios
         .get(`/users/profile?username=${username}`)

@@ -47,11 +47,54 @@
   margin: 20px 0;
 }
 
+.shareInput {
+  border: none;
+  width: 80%;
+}
+
+.shareInput:focus {
+  outline: none;
+}
+
+.shareImgContainer {
+  padding: 0 20px 10px 20px;
+  position: relative;
+}
+
+.shareImg {
+  width: 100%;
+  object-fit: contain;
+}
+
+.shareCancelImg {
+  position: absolute;
+  top: 0;
+  right: 20px;
+  cursor: pointer;
+  opacity: 0.7;
+}
+
 .postImage {
   margin-top: 20px;
   width: 100%;
   max-height: 500px;
   object-fit: contain;
+}
+
+.updateButton {
+  border: none;
+  outline: none;
+  background-color: greenyellow;
+  color: green;
+  padding: 5px;
+  border-radius: 10px;
+  font-weight: bold;
+  font-size: 1em;
+}
+
+.updateButton:hover {
+  opacity: 0.8;
+  transition: all 0.5s ease-in-out;
 }
 
 .postBottom {
@@ -80,4 +123,22 @@
   cursor: pointer;
   border-bottom: 1px dashed gray;
   font-size: 15px;
+}
+
+.postTopRight {
+  position: relative;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  background-color: whitesmoke;
+  opacity: 0.9;
+  padding: 3px 5px;
+  position: absolute;
+  right: 0;
+}
+
+.option {
+  cursor: pointer;
 }

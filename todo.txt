@@ -4,17 +4,17 @@ F-E B-E Feature
 [-] [-] Login User
 [-] [-] Logout User
 [-] [-] Create Post
-[+] [-] Update Post
-[+] [-] Delete Post
+[-] [-] Update Post
+[-] [-] Delete Post
 [-] [-] Like and Dislike Post
 [-] [-] Follow and Unfollow User
-[+] [+] Tag friends in post
-[+] [+] Chat Messaging + Video Calling 
-[+] [+] Notification System
 [+] [+] Follow Request
+[+] [+] Chat Messaging + Audio/Video Calling 
+[+] [+] Notification System
 [+] [+] Settings Page
 [+] [+] Dark Mode 
 [+] [+] Theme Change (Color)
+[+] [+] Tag friends in post
 
 SPECIAL FEATURES
 

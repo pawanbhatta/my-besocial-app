@@ -7,6 +7,7 @@ import { Add, Remove } from "@material-ui/icons";
 
 function ProfileRightbar({ username, user }) {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
+  const SI = process.env.REACT_APP_GET_IMAGES;
   const [friends, setFriends] = useState([]);
   const { user: currentUser, dispatch } = useContext(AuthContext);
   const [isFollowing, setIsFollowing] = useState(
@@ -118,7 +119,7 @@ function ProfileRightbar({ username, user }) {
                   <img
                     src={
                       user.profilePicture
-                        ? PF + user.profilePicture
+                        ? SI + "download/" + user.profilePicture
                         : PF + "person/NoAvatarProfile.png"
                     }
                     alt=""
