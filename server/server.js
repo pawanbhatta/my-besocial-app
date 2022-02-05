@@ -7,7 +7,7 @@ const morgan = require("morgan");
 const cors = require("cors");
 const helmet = require("helmet");
 
-const { MONGO_URL, APP_PORT } = process.env;
+const { MONGO_URL, APP_PORT, CORS_ORIGIN } = process.env;
 const Grid = require("gridfs-stream");
 const path = require("path");
 
@@ -16,9 +16,7 @@ app.use(express.json());
 app.use(helmet());
 app.use(morgan("common"));
 app.use(cors({
-  // origin: 'http://localhost:3000',
-  // origin: 'http://192.168.1.65:3000',
-  origin: 'https://vattevaii.github.io',
+  origin: CORS_ORIGIN,
   credentials: true,
   // allowedHeaders: 
 }));
