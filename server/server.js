@@ -16,9 +16,9 @@ app.use(express.json());
 app.use(helmet());
 app.use(morgan("common"));
 app.use(cors({
-  origin: 'http://localhost:3000',
+  // origin: 'http://localhost:3000',
   // origin: 'http://192.168.1.65:3000',
-  // origin: 'https://vattevaii.github.io',
+  origin: 'https://vattevaii.github.io',
   credentials: true,
   // allowedHeaders: 
 }));
@@ -260,4 +260,4 @@ app.use("/api/auth", authRoutes);
 app.use("/api/posts", postRoutes);
 // app.use("/api/images", imageRoutes);
 
-app.listen(APP_PORT, () => console.log(`Server started on port ${APP_PORT}`));
+app.listen(process.env.PORT || APP_PORT, () => console.log(`Server started on port ${process.env.PORT || APP_PORT}`));
