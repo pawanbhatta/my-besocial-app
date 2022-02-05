@@ -4,7 +4,7 @@
   "description": "MERN social media application",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon server.js"
+    "start": "node server.js"
   },
   "author": "Pawan Bhatta",
   "license": "ISC",
