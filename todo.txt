@@ -1,0 +1,51 @@
+F-E B-E Feature
+[-] [-] Authentication
+[-] [-] Register User     
+[-] [-] Login User
+[-] [-] Logout User
+[-] [-] Create Post
+[-] [-] Update Post
+[-] [-] Delete Post
+[-] [-] Like and Dislike Post
+[-] [-] Follow and Unfollow User
+[+] [+] Follow Request
+[+] [+] Chat Messaging + Audio/Video Calling 
+[+] [+] Notification System
+[+] [+] Settings Page
+[+] [+] Dark Mode 
+[+] [+] Theme Change (Color)
+[+] [+] Tag friends in post
+
+NOTE:::refresh token is yet to setup
+
+SPECIAL FEATURES
+
+[+] Usage Monitoring
+[+] Post Scheduler
+[+] Event Remainder
+[+] Location Tracking
+[+] Posts Restricted Mode (Public+Private+Friends)
+[+] Profile QR generator
+[+] Contents Download Approval
+[+] Two-factor Authentication
+[+] Nearby Friends and Popular Location
+[+] Unicode
+
+ARTIFICIAL INTELLIGENCE
+
+[+] Audio Search
+[+] Face Recognition for auto tagging
+[+] Post Filtering using NLP
+[+] Image Search (optional)
+[+] Recommendation System
+[+] Digital Assistant
+
+
+MISCELLANEOUS FEATURES 
+
+[+] Track Profile Viewer
+[+] Any file sharing compatible
+[+] Story Uploading
+[+] Karoake Story  
+[+] Live Posting
+[+] Ask Me Anthing
