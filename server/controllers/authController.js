@@ -22,12 +22,9 @@ const authController = {
     try {
       // GENERATE HASHED PASSWORD
       const salt = await bcrypt.genSalt(10);
-      console.log(req.body)
       const hashedPassword = await bcrypt.hash(req.body.password, salt);
-      console.log("ME")
-      console.log(req.body)
+
       const userExist = await User.findOne({ email: req.body.email });
-      console.log("ME")
 
       if (userExist)
         throw res
