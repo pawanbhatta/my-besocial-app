@@ -30,7 +30,6 @@ module.exports = isAuthenticated = async (req, res, next) => {
     }
 
     const cookies = parseCookies(req);
-
     const user = await jwt.verify(cookies.jwt, "myjsonsecret");
     if (!user)
       return next(CustomErrorHandler.unAuthenticated("Token is invalid"));

@@ -7,7 +7,7 @@ const morgan = require("morgan");
 const cors = require("cors");
 const helmet = require("helmet");
 
-const { MONGO_URL, APP_PORT } = process.env;
+const { MONGO_URL, APP_PORT, CORS_ORIGIN } = process.env;
 const Grid = require("gridfs-stream");
 const path = require("path");
 
@@ -15,7 +15,19 @@ const path = require("path");
 app.use(express.json());
 app.use(helmet());
 app.use(morgan("common"));
-app.use(cors());
+app.use(cors({
+  origin: CORS_ORIGIN,
+  credentials: true,
+  // allowedHeaders: 
+}));
+
+//Ashish Added These
+// app.use(function (req, res, next) {
+//   res.header('Access-Control-Allow-Origin', 'http://localhost:3000/');
+//   res.header('Access-Control-Allow-Credentials', true);
+//   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+//   next();
+// });
 
 // Routes
 const userRoutes = require("./routes/users");
@@ -246,4 +258,4 @@ app.use("/api/auth", authRoutes);
 app.use("/api/posts", postRoutes);
 // app.use("/api/images", imageRoutes);
 
-app.listen(APP_PORT, () => console.log(`Server started on port ${APP_PORT}`));
+app.listen(process.env.PORT || APP_PORT, () => console.log(`Server started on port ${process.env.PORT || APP_PORT}`));
