@@ -18,7 +18,7 @@ app.use(morgan("common"));
 app.use(cors({
   origin: CORS_ORIGIN,
   credentials: true,
-  allowedHeaders: "Content-Type,Accept,Access-Control-Allow-Origin,Access-Control-Allow-Credentials,cache-control,user-agent,x-access-token",
+  allowedHeaders: "Content-Type,Accept,User-Agent,Accept-Language,Access-Control-Allow-Origin,Access-Control-Allow-Credentials,Sec-Fetch-Dest,Sec-Fetch-Mode,Sec-Fetch-Site,Cache-Control",
   vary: "Origin,Cookies",
 }));
 
