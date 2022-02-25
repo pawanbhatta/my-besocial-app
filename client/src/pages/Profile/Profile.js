@@ -105,6 +105,7 @@ const Profile = () => {
                       className="addCoverImage addProfile"
                       htmlColor="tomato"
                     />
+
                     <input
                       style={{ display: "none" }}
                       type="file"
