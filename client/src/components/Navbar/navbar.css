@@ -1,0 +1,144 @@
+.nav {
+  background-color: #000000;
+  background-image: linear-gradient(147deg, #000000 0%, #2c3e50 74%);
+  color: white;
+  padding: 6px 20px;
+  display: flex;
+  flex-direction: column;
+  position: sticky;
+  top: 0px;
+  min-width: 650px;
+  z-index: 2;
+}
+
+.navTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  text-shadow: -1px 2px rgba(128, 128, 128, 0.5);
+  background: -webkit-linear-gradient(whitesmoke, #1e2425);
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.navLogo {
+  flex: 1;
+}
+
+.search {
+  display: flex;
+  align-items: center;
+  background-color: gray;
+  padding: 10px 20px;
+  border-radius: 10px;
+  background-color: #000000;
+  background-image: linear-gradient(315deg, #000000 0%, #7f8c8d 74%);
+}
+
+.navSearch {
+  flex: 2;
+}
+
+.searchInput {
+  border: none;
+  background-color: transparent;
+}
+
+.searchInput::placeholder {
+  color: lightgray;
+}
+
+.navbarProfile {
+  /* background: none; */
+  /* width: 11%; */
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  /* position: relative; */
+  flex: 1;
+}
+
+.topbarImg {
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  cursor: pointer;
+}
+
+.navbarUsername {
+  padding: 0px 5px;
+}
+
+.profileArrow {
+  background-color: lightgray;
+  border-radius: 50%;
+  opacity: 0.2;
+  /* bottom: -15px;
+  left: 21px; */
+  cursor: pointer;
+  color: brown;
+}
+
+.profileArrow:hover {
+  opacity: 0.5;
+}
+
+.navBottom {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.menuItem {
+  margin-right: 50px;
+  margin-top: 10px;
+  margin-bottom: 0px;
+  cursor: pointer;
+  color: lightgray;
+  font-weight: 400;
+  position: relative;
+}
+
+.options {
+  background-color: #000000;
+  background-image: linear-gradient(147deg, #000000 0%, #2c3e50 74%);
+  display: flex;
+  flex-direction: column;
+  background-color: black;
+  opacity: 0.9;
+  padding: 3px 6px;
+  border-radius: 10px;
+  position: absolute;
+  bottom: -30px;
+  right: 0px;
+}
+
+.option {
+  cursor: pointer;
+}
+
+.topbarIconItem {
+  margin-right: 50px;
+  margin-top: 20px;
+  cursor: pointer;
+  position: relative;
+}
+
+.topbarIconBadge {
+  width: 15px;
+  height: 15px;
+  background-color: red;
+  border-radius: 50%;
+  color: white;
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+}

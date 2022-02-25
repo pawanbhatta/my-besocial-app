@@ -12,6 +12,9 @@ router.get("/profile/:username", isAuthenticated, postController.profilePosts);
 // CREATE A POST
 router.post("/", isAuthenticated, postController.create);
 
+// Get search results
+router.get("/searchData", isAuthenticated, postController.getSearchData);
+
 // UPDATE A POST
 router.put("/:id", isAuthenticated, postController.update);
 

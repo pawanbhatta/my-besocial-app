@@ -11,7 +11,7 @@ function Topbar() {
   const SI = process.env.REACT_APP_GET_IMAGES;
 
   const navigate = useNavigate();
-  const { user, dispatch, accessToken, refreshToken } = useContext(AuthContext);
+  const { user, dispatch } = useContext(AuthContext);
   const [, , removeCookie] = useCookies(["jwt", "user", "refresh"]);
 
   const logoutHandler = () => {
@@ -21,7 +21,6 @@ function Topbar() {
     dispatch({
       type: "LOGOUT",
     });
-    console.log("logout", user, accessToken, refreshToken);
     navigate("/login");
   };
 

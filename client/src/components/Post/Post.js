@@ -1,4 +1,6 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext, useRef } from "react";
+import * as faceapi from "face-api.js";
+
 import { Cancel, MoreVert } from "@material-ui/icons";
 import "./styles.css";
 import axios from "axios";
@@ -137,15 +139,15 @@ function Post({ post }) {
               onClick={() => setShowOption(!showOption)}
             />
             {showOption ? (
-              <div className="options">
-                <span className="option" onClick={updateHandler}>
+              <div className="optionsss">
+                <span className="option1" onClick={updateHandler}>
                   Update
                 </span>
-                <span className="option" onClick={deleteHandler}>
+                <span className="option1" onClick={deleteHandler}>
                   Delete
                 </span>
                 <hr />
-                <span className="option">More</span>
+                <span className="option1">More</span>
               </div>
             ) : (
               ""
@@ -216,7 +218,7 @@ function Post({ post }) {
           </div>
           <div className="postBottomRight">
             <div className="postCommentText">
-              {currentPost.comment} comments
+              {currentPost.comments} comments
             </div>
           </div>
         </div>

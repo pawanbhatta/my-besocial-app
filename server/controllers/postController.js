@@ -114,12 +114,45 @@ const postController = {
   },
 
   profilePosts: async (req, res) => {
+    // const { userId } = req.query;
     try {
+      // const user = userId
+      //   ? await User.findOne({ _id: userId })
+      //   : await User.findOne({ username: req.params.username });
       const user = await User.findOne({ username: req.params.username });
       const posts = await Post.find({ userId: user._id });
       return res.status(200).json(posts);
     } catch (error) {
       return res.status(500).json(error);
+    }
+  },
+
+  getSearchData: async (req, res) => {
+    const { q } = req.query;
+    console.log(q);
+    try {
+      const users = await User.find({
+        username: { $regex: q, $options: "i" },
+      }).select(
+        "-_v -createdAt -updatedAt -password -coverPicture -profilePicture"
+      );
+      const posts = await Post.find({
+        desc: { $regex: q, $options: "i" },
+      }).select("-_v -createdAt -updatedAt -image -imageId -likes");
+
+      const data = users.concat(...posts);
+
+      // const keys = ["username", "desc"];
+
+      // const search = (data) => {
+      //   return data.filter((item) =>
+      //     keys.some((key) => item[key].toLowerCase().includes(q))
+      //   );
+      // };
+
+      res.status(200).json(data.splice(0, 10));
+    } catch (err) {
+      res.status(500).send("Server error while searching data");
     }
   },
 };

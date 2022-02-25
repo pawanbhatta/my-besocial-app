@@ -11,21 +11,44 @@ function Feed() {
   const { username } = useParams();
 
   useEffect(() => {
+    const CancelToken = axios.CancelToken;
+    const source = CancelToken.source();
+
     const fetchPosts = async () => {
-      const res = username
-        ? await axios.get("/posts/profile/" + username, {
-            headers: { authorization: "Bearer " + accessToken },
+      try {
+        const res = username
+          ? await axios.get(
+              "/posts/profile/" + username,
+              {
+                cancelToken: source.token,
+              },
+              {
+                headers: { authorization: "Bearer " + accessToken },
+              }
+            )
+          : await axios.get("/posts/timeline?email=" + user.email, {
+              headers: { authorization: "Bearer " + accessToken },
+            });
+        setPosts(
+          res.data.sort((p1, p2) => {
+            return new Date(p2.createdAt) - new Date(p1.createdAt);
           })
-        : await axios.get("/posts/timeline?email=" + user.email, {
-            headers: { authorization: "Bearer " + accessToken },
-          });
-      setPosts(
-        res.data.sort((p1, p2) => {
-          return new Date(p2.createdAt) - new Date(p1.createdAt);
-        })
-      );
+        );
+      } catch (error) {
+        if (axios.isCancel(error)) {
+          console.log("successfully aborted");
+        } else {
+          console.log("server errrorr", error);
+        }
+      }
     };
+
     fetchPosts();
+
+    return () => {
+      // cancel the request before component unmounts
+      source.cancel();
+    };
   }, [username, user._id, accessToken, user.email]);
 
   return (

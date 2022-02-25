@@ -9,7 +9,7 @@ F-E B-E Feature
 [-] [-] Like and Dislike Post
 [-] [-] Follow and Unfollow User
 [+] [+] Follow Request
-[+] [+] Chat Messaging + Audio/Video Calling 
+[+] [+] Chat Messaging + Audio/Video Calling
 [+] [+] Notification System
 [+] [+] Settings Page
 [+] [+] Dark Mode 
@@ -17,6 +17,7 @@ F-E B-E Feature
 [+] [+] Tag friends in post
 
 NOTE:::refresh token is yet to setup
+NOTE:::make a separate contextAPI for posts
 
 SPECIAL FEATURES
 

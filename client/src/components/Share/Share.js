@@ -74,7 +74,7 @@ function Share() {
             ref={desc}
             type="text"
             className="shareInput"
-            placeholder={`What's in your mind ${user.username}?`}
+            placeholder={`What's in your mind, ${user.username}?`}
           />
         </div>
         <hr className="shareHr" />

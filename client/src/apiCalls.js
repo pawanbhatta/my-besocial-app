@@ -32,10 +32,12 @@ export const refreshTokenCall = async (token, dispatch) => {
   // dispatch({ type: "REFRESH_TOKEN" });
 
   try {
-    const res = await axios.post("/auth/refresh", token);
-    dispatch({ type: "REFRESH_SUCCESS", payload: res.data });
+    const { data } = await axios.post("/auth/refresh", { token });
+    return data;
+    // dispatch({ type: "REFRESH_SUCCESS", payload: res.data });
   } catch (err) {
-    dispatch({ type: "REFRESH_FAILURE", payload: err.response.data });
+    throw err.response.data;
+    // dispatch({ type: "REFRESH_FAILURE", payload: err.response.data });
   }
 };
 

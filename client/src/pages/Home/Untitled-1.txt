@@ -1,0 +1,22 @@
+# This is the resource bundle for test1.test1
+
+#Texts for manifest.json
+
+#XTIT: Application name
+appTitle=My First App
+
+#YDES: Application description
+appDescription=A Fiori application.
+#XTIT: Main view title
+title=My First APP Assignment1
+
+
+i18 properties
+
+list view
+<attributes>
+					<ObjectAttribute id="_IDGenObjectAttribute1" text="{QuantityPerUnit}"/>
+				</attributes>
+				<firstStatus>
+					<ObjectStatus id="_IDGenObjectStatus1" text="{= ${Discontinued} ? ${i18n>Discontinued} : ${i18n>Available} }" state="{= ${Discontinued} ? 'Error' : 'Success' }"/>
+				</firstStatus>

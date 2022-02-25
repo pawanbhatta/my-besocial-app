@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router";
 import { Add, Cancel } from "@material-ui/icons";
+import Navbar from "../../components/Navbar/Navbar";
 
 const Profile = () => {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
@@ -66,7 +67,6 @@ const Profile = () => {
   };
 
   useEffect(() => {
-    console.log("username", username);
     const fetchUser = () => {
       axios
         .get(`/users/profile?username=${username}`)
@@ -81,9 +81,10 @@ const Profile = () => {
 
   return (
     <>
-      <Topbar />
+      {/* <Topbar /> */}
+      <Navbar />
       <div className="profile">
-        <Sidebar />
+        {/* <Sidebar /> */}
         <div className="profileRight">
           <div className="profileRightTop">
             <div className="profileCover">

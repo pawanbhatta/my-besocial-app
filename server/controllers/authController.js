@@ -52,7 +52,7 @@ const authController = {
     }
   },
 
-  login: async (req, res, next) => {
+  login: async (req, res) => {
     try {
       const user = await User.findOne({ email: req.body.email });
 
@@ -82,20 +82,26 @@ const authController = {
     }
   },
 
-  refreshToken: async (req, res, next) => {
+  refreshToken: async (req, res) => {
     try {
+      console.log(req.body);
       const refreshToken = req.body.token;
 
-      if (!refreshToken) return next(CustomErrorHandler.unAuthenticated());
+      if (!refreshToken) {
+        console.log("first error", refreshToken);
+        throw res.status(401).send("You are not authenticated");
+      }
 
-      if (!refreshTokens.includes(refreshToken))
-        return next(
-          CustomErrorHandler.unAuthenticated("Refresh Token is not valid")
-        );
-
+      if (!refreshTokens.includes(refreshToken)) {
+        console.log("invalid refresh token");
+        throw res.status(401).send("Invalid refresh token");
+      }
       const user = await jwt.verify(refreshToken, "myrefreshjsonsecret");
 
-      if (!user) return next(CustomErrorHandler.unAuthenticated());
+      if (!user) {
+        console.log("got no user error", user, refreshToken);
+        throw res.status(401).send("Absolutely not authenticated");
+      }
 
       refreshTokens = refreshTokens.filter((token) => token !== refreshToken);
 
@@ -109,11 +115,11 @@ const authController = {
         refreshToken: newRefreshToken,
       });
     } catch (err) {
-      res.status(500).send("Server Error");
+      throw res.status(500).send("Server Error");
     }
   },
 
-  logout: async (req, res, next) => {
+  logout: async (req, res) => {
     const refreshToken = req.body.token;
     refreshTokens = refreshTokens.filter((token) => token !== refreshToken);
 

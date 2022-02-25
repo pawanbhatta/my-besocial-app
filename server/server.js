@@ -15,7 +15,11 @@ const path = require("path");
 app.use(express.json());
 app.use(helmet());
 app.use(morgan("common"));
-app.use(cors());
+app.use(
+  cors(
+    { origin: "http://localhost:3000", credentials: true } //Link to frontend
+  )
+);
 
 // Routes
 const userRoutes = require("./routes/users");

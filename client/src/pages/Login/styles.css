@@ -5,6 +5,12 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  /* background-color: #000000;
+  background-image: linear-gradient(147deg, #000000 0%, #04619f 74%);
+  color: white; */
+  background-color: #000000;
+  background-image: linear-gradient(147deg, #000000 0%, #2c3e50 74%);
+  color: lightcyan;
 }
 
 .loginWrapper {
@@ -40,6 +46,9 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  /* color: black; */
+  background-color: #923cb5;
+  background-image: linear-gradient(147deg, #923cb5 0%, #000000 74%);
 }
 
 .loginInput {
@@ -48,6 +57,9 @@
   border: 1px solid gray;
   font-size: 18px;
   padding-left: 20px;
+  background-color: #000000;
+  background-image: linear-gradient(315deg, #000000 0%, #7f8c8d 74%);
+  color: white;
 }
 
 .loginInput:focus {
