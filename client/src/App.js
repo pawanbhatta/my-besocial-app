@@ -1,4 +1,4 @@
-import { Home, Profile, Login, Register } from "./pages";
+import { Home, Profile, Login, Register, Messenger } from "./pages";
 import {
   BrowserRouter as Router,
   Routes,
@@ -38,6 +38,10 @@ function App() {
           <Route
             path="/register"
             element={accessToken ? <Home /> : <Register />}
+          />
+          <Route
+            path="/messenger"
+            element={!accessToken ? <Navigate to="/" /> : <Messenger />}
           />
           <Route
             path="/profile/:username"

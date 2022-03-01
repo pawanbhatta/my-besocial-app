@@ -1,0 +1,150 @@
+.postImage {
+  width: clamp(10%, 700px, 100%);
+  height: clamp(10%, 400px, 50vh);
+}
+.postImages {
+  position: absolute;
+  top: 0;
+  height: inherit;
+}
+.post-images {
+  height: fit-content;
+}
+.postImage img {
+  height: inherit;
+  object-fit: contain;
+  /* margin: auto; */
+  max-height: 400px;
+}
+.carousel-root,
+.carousel-root > * {
+  /* position: relative; */
+  height: inherit;
+}
+.postDetail {
+  position: relative;
+  /* bottom: 3em; */
+  width: 100%;
+  border-radius: 0;
+  font-size: 1.1em;
+  display: flex;
+  flex-direction: column-reverse;
+  justify-content: space-between;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.5s, visibility 0.5s;
+}
+.postDetail.show {
+  visibility: visible;
+  opacity: 100;
+}
+.postDetail > * {
+  padding: 0.5em 1em;
+  width: fit-content;
+}
+.postDetail .desc {
+  /* width: max-content; */
+  display: flex;
+  position: absolute;
+  top: 100%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  width: fit-content;
+  cursor: pointer;
+}
+.postDetail .desc > p {
+  position: relative;
+  font-weight: 450;
+  font-style: oblique;
+  max-width: 300px;
+  max-height: 3em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.postDetail .desc.clicked > p {
+  max-height: 100%;
+}
+.postDetail .data {
+  display: flex;
+  flex-wrap: wrap;
+}
+.postDetail .data > * {
+  line-height: 2em;
+  display: inline-flex;
+}
+.postDetail span {
+  width: max-content;
+  display: flex;
+  align-items: center;
+}
+.postDetail .likes .liked {
+  color: #f55;
+}
+.postDetail .data > *::after {
+  content: "|";
+  color: #fff5;
+  padding-inline: 0.5em;
+}
+.postDetail .data > *:last-child::after {
+  content: "";
+  padding: 0;
+}
+.postDetail .data svg {
+  height: 1.8em;
+  width: auto;
+  padding: 0.3em;
+  fill: white;
+}
+.postDetail .data .liked > svg {
+  fill: #f03333;
+  stroke: #f03333;
+}
+
+.postDetail .details {
+  position: fixed;
+  top: 20vh;
+  left: 0;
+  width: 100vw;
+  padding: 2em 1em;
+}
+.postDetail .details > .detail-data {
+  height: 50vh;
+  overflow: auto;
+  font-size: 1em;
+  visibility: visible;
+}
+@media screen and (min-width: 600px) {
+  .postImage {
+     margin-inline: auto;
+  }
+  .postDetail {
+     /* max-width: fit-content; */
+     position: absolute;
+     top: 90%;
+     border-radius: 1em;
+     flex-direction: row;
+  }
+  .postDetail .desc {
+     position: relative;
+  }
+  .postDetail .details {
+     position: relative;
+     display: flex;
+     flex-direction: column;
+     top: 0;
+     right: 0;
+     width: 100%;
+     height: 50vh;
+     padding-top: 0;
+     padding-bottom: 0;
+  }
+  .postDetail .details > .detail-data {
+     flex: 1;
+  }
+}
+.image .preview {
+  max-height: 200px;
+  max-width: 200px;
+  margin: 0 auto;
+}

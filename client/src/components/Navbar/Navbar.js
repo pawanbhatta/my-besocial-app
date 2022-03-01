@@ -42,8 +42,8 @@ function Navbar() {
       const res = await axios.get(`/posts/searchData?q=${query}`);
       setData(res.data);
     };
-    if (query.length > 2) fetchData();
-    if (query.length < 3) setData([]);
+    if (query.length > 1) fetchData();
+    if (query.length < 2) setData([]);
   }, [query]);
 
   return (
@@ -120,8 +120,10 @@ function Navbar() {
           <span className="topbarIconBadge">1</span>
         </div>
         <div className="menuItem">
-          <ForumTwoTone />
-          <span className="topbarIconBadge">1</span>
+          <Link to="/messenger" style={{ textDecoration: "none" }}>
+            <ForumTwoTone />
+            <span className="topbarIconBadge">1</span>
+          </Link>
         </div>
         <div className="menuItem">
           <NotificationImportant />
