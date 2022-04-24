@@ -15,37 +15,31 @@ const queryClient = new QueryClient();
 function App() {
   const { accessToken, dispatch } = useContext(AuthContext);
   const [cookies] = useCookies(["jwt"]);
+  const { jwt, user } = cookies;
 
   useEffect(() => {
     if (accessToken === "") {
-      const { jwt, user } = cookies;
       if (jwt) dispatch({ type: "ACCESS_TOKEN", payload: { user, jwt } });
     }
-  }, [dispatch, accessToken, cookies]);
+  }, [dispatch, accessToken, jwt, user]);
 
   return (
     <QueryClientProvider client={queryClient}>
       <Router>
         <Routes>
-          <Route
-            path="/"
-            element={accessToken ? <Home /> : <Navigate to="/login" />}
-          />
+          <Route path="/" element={jwt ? <Home /> : <Navigate to="/login" />} />
           <Route
             path="/login"
-            element={accessToken ? <Navigate to="/" /> : <Login />}
+            element={jwt ? <Navigate to="/" /> : <Login />}
           />
-          <Route
-            path="/register"
-            element={accessToken ? <Home /> : <Register />}
-          />
+          <Route path="/register" element={jwt ? <Home /> : <Register />} />
           <Route
             path="/messenger"
-            element={!accessToken ? <Navigate to="/" /> : <Messenger />}
+            element={!jwt ? <Navigate to="/" /> : <Messenger />}
           />
           <Route
             path="/profile/:username"
-            element={accessToken ? <Profile /> : <Navigate to="/login" />}
+            element={jwt ? <Profile /> : <Navigate to="/login" />}
           />
         </Routes>
       </Router>

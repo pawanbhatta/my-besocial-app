@@ -11,7 +11,10 @@ function Topbar() {
   const SI = process.env.REACT_APP_GET_IMAGES;
 
   const navigate = useNavigate();
-  const { user, dispatch } = useContext(AuthContext);
+  const { dispatch } = useContext(AuthContext);
+  const [cookies] = useCookies(["jwt", "user"]);
+  const { user } = cookies;
+
   const [, , removeCookie] = useCookies(["jwt", "user", "refresh"]);
 
   const logoutHandler = () => {

@@ -1,68 +1,84 @@
 .messenger {
-  height: calc(100vh-70px);
-  display: flex;
+    height: calc(100vh - 100px);
+    display: flex;
+    position: relative;
 }
 
 .chatMenu {
-  flex: 3.5;
+    flex: 3.5;
+    height: inherit;
+    overflow-y: scroll;
 }
 
 .chatMenuInput {
-  width: 90%;
-  padding: 10px 0;
-  border: none;
-  border-bottom: 1px solid gray;
+    width: 90%;
+    padding: 10px 0;
+    border: none;
+    border-bottom: 1px solid gray;
+    position: sticky;
+    top: 0;
 }
 
 .chatBox {
-  flex: 5.5;
+    flex: 5.5;
 }
 
 .chatBoxWrapper {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
 }
 
 .chatBoxTop {
-  height: 100%;
-  overflow-y: scroll;
-  scroll-behavior: smooth;
-  padding-right: 10px;
+    height: 100%;
+    overflow-y: scroll;
+    scroll-behavior: smooth;
+    padding-right: 10px;
 }
 
 .chatBoxBottom {
-  margin-top: 5px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+    margin-top: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .chatMessageInput {
-  width: 80%;
-  height: 90px;
-  padding: 10px;
-  border: none;
-  /* outline: none; */
+    width: 80%;
+    height: 90px;
+    padding: 10px;
+    border: none;
+    /* outline: none; */
 }
 
 .chatSubmitButton {
-  width: 70px;
-  height: 40px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  background-color: teal;
-  color: white;
+    width: 70px;
+    height: 40px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: teal;
+    color: white;
 }
 
 .chatOnline {
-  flex: 3;
+    flex: 3;
+    height: inherit;
+    overflow-y: scroll;
 }
 
 .chatMenuWrapper,
-.chatBoxWrapper,
-.chatOnlineWrapper {
-  padding: 10px;
-  height: 100%;
+.chatBoxWrapper {
+    padding: 10px;
+    height: 100%;
+}
+
+.noConversationText {
+    position: absolute;
+    top: 10%;
+    font-size: 50px;
+    color: lightgray;
+    text-align: center;
+    cursor: default;
 }

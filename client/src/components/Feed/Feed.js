@@ -2,12 +2,15 @@ import { Share, Post, StoryReel } from "../index";
 import "./styles.css";
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
+import { useCookies } from "react-cookie";
 import { AuthContext } from "../../context/AuthContext";
 import { useParams } from "react-router";
 
 function Feed() {
   const [Posts, setPosts] = useState([]);
-  const { user, accessToken } = useContext(AuthContext);
+  const [cookies] = useCookies(["jwt", "user"]);
+  const { user, jwt: accessToken } = cookies;
+  // const { user, accessToken } = useContext(AuthContext);
   const { username } = useParams();
 
   useEffect(() => {
@@ -31,7 +34,7 @@ function Feed() {
             });
         setPosts(
           res.data.sort((p1, p2) => {
-            return new Date(p2.createdAt) - new Date(p1.createdAt);
+            return new Date(p2.updatedAt) - new Date(p1.updatedAt);
           })
         );
       } catch (error) {

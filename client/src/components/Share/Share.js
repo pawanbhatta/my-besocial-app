@@ -6,6 +6,7 @@ import {
   Room,
 } from "@material-ui/icons";
 import { useContext, useRef, useState } from "react";
+import { useCookies } from "react-cookie";
 import { AuthContext } from "../../context/AuthContext";
 import "./styles.css";
 import axios from "axios";
@@ -14,7 +15,9 @@ function Share() {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const SI = process.env.REACT_APP_GET_IMAGES;
 
-  const { user } = useContext(AuthContext);
+  const [cookies] = useCookies(["jwt"]);
+  const { user } = cookies;
+  // const { user } = useContext(AuthContext);
 
   const desc = useRef();
   const [file, setFile] = useState(null);

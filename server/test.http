@@ -1,0 +1,49 @@
+@API_URL = http://localhost:5000/api
+
+### Get all users conversations
+GET {{API_URL}}/conversations/6263c9f5a73f5930047ba9b0
+
+### Create a conversation between two users
+POST {{API_URL}}/conversations
+Content-Type: application/json
+
+{
+  "senderId":"6263c9f5a73f5930047ba9b0",
+  "receiverId":"6263cdc2a73f5930047ba9c3"
+}
+
+### Create a conversation between two users
+POST {{API_URL}}/conversations
+Content-Type: application/json
+
+{
+  "senderId":"61ed140c27623b228cd74524",
+  "receiverId":"61ecd66c11f8cd23fcc66cc4"
+}
+
+### Get a conversation of a particular user
+GET {{API_URL}}/conversations/61ecd66c11f8cd23fcc66cc4
+
+### Delete a conversation
+DELETE {{API_URL}}/conversations
+Content-Type:application/json
+
+{
+  "convId":"62207267d183d93fdc3db01a"
+}
+
+
+
+### Get all messages of a conversation
+GET {{API_URL}}/messages/6220777c742ca43804f4a489
+
+
+### Add a message
+POST {{API_URL}}/messages
+Content-Type: application/json
+
+{
+  "conversationId":"6220777c742ca43804f4a489",
+  "sender":"61ecdbe627623b228cd7406c",
+  "text":"Hello Jaan"
+}

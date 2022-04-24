@@ -25,6 +25,8 @@ app.use(
 const userRoutes = require("./routes/users");
 const authRoutes = require("./routes/auth");
 const postRoutes = require("./routes/posts");
+const messageRoutes = require("./routes/messages");
+const conversationRoutes = require("./routes/conversations");
 // const imageRoutes = require("./routes/images");
 
 // Create mongo connection
@@ -248,6 +250,8 @@ app.delete("/api/images/:filename", async (req, res) => {
 app.use("/api/users", userRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/posts", postRoutes);
+app.use("/api/conversations", conversationRoutes);
+app.use("/api/messages", messageRoutes);
 // app.use("/api/images", imageRoutes);
 
 app.listen(APP_PORT, () => console.log(`Server started on port ${APP_PORT}`));

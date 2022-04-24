@@ -117,6 +117,7 @@ const userController = {
 
   follow: async (req, res) => {
     if (req.body.userId !== req.params.id) {
+      let updatedUser;
       try {
         const user = await User.findById(req.params.id);
         const currentUser = await User.findById(req.body.userId);
@@ -128,9 +129,17 @@ const userController = {
           await currentUser.updateOne({
             $push: { followings: req.params.id },
           });
-          return res.status(200).json("User has been followed");
+          updatedUser = await User.findById(currentUser._id);
+          return res
+            .status(200)
+            .json({ message: "User has been followed", updatedUser });
         } else {
-          return res.status(403).json("You have already followed this user");
+          updatedUser = await User.findById(user._id);
+
+          return res.status(200).json({
+            message: "You have already followed this user",
+            updatedUser,
+          });
         }
       } catch (error) {
         return res.status(500).json(error);
@@ -142,6 +151,7 @@ const userController = {
 
   unFollow: async (req, res) => {
     if (req.body.userId !== req.params.id) {
+      let updatedUser;
       try {
         const user = await User.findById(req.params.id);
         const currentUser = await User.findById(req.body.userId);
@@ -153,9 +163,15 @@ const userController = {
           await currentUser.updateOne({
             $pull: { followings: req.params.id },
           });
-          return res.status(200).json("User has been unfollowed");
+          updatedUser = await User.findById(currentUser._id);
+
+          return res
+            .status(200)
+            .json({ message: "User has been unfollowed", updatedUser });
         } else {
-          return res.status(403).json("You dont follow this user");
+          return res
+            .status(200)
+            .json({ message: "You dont follow this user", updatedUser });
         }
       } catch (error) {
         return res.status(500).json(error);

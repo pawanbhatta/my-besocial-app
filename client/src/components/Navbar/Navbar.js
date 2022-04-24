@@ -24,8 +24,9 @@ function Navbar() {
   const [data, setData] = useState([]);
 
   const navigate = useNavigate();
-  const { user, dispatch } = useContext(AuthContext);
-  const [, , removeCookie] = useCookies(["jwt", "user", "refresh"]);
+  const { dispatch } = useContext(AuthContext);
+  const [cookies, , removeCookie] = useCookies(["jwt", "user", "refresh"]);
+  const { user } = cookies;
 
   const logoutHandler = () => {
     removeCookie("jwt");

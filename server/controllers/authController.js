@@ -76,9 +76,9 @@ const authController = {
 
       return res.status(200).json({ user, accessToken, refreshToken });
     } catch (error) {
-      // console.log("error :>> ", error);
+      console.log("error :>> ", error);
       // return next(new CustomErrorHandler.serverError());
-      res.status(500).json("Server Error Occurred");
+      // res.status(500).json("Server Error Occurred");
     }
   },
 

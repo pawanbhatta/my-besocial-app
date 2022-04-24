@@ -4,6 +4,7 @@ import { Online } from "../index";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useContext } from "react";
+import { useCookies } from "react-cookie";
 import { AuthContext } from "../../context/AuthContext";
 import { Link } from "react-router-dom";
 
@@ -11,7 +12,9 @@ function HomeRightbar() {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const SI = process.env.REACT_APP_GET_IMAGES;
 
-  const { user } = useContext(AuthContext);
+  const [cookies] = useCookies(["jwt", "user"]);
+  const { user } = cookies;
+
   const [friends, setFriends] = useState([]);
 
   useEffect(() => {

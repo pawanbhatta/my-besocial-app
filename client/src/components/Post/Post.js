@@ -8,6 +8,7 @@ import { format } from "timeago.js";
 import { useToast } from "@chakra-ui/toast";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
+import { useCookies } from "react-cookie";
 import http from "http";
 import { updatePostCall } from "../../apiCalls";
 
@@ -26,7 +27,10 @@ function Post({ post }) {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const SI = process.env.REACT_APP_GET_IMAGES;
 
-  const { user: currentUser, dispatch, error } = useContext(AuthContext);
+  const [cookies] = useCookies(["jwt", "user"]);
+  const { user: currentUser } = cookies;
+
+  const { dispatch, error } = useContext(AuthContext);
   const [currentPost, setCurrentPost] = useState(post);
 
   const toast = useToast();

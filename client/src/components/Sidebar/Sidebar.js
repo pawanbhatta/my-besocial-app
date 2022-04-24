@@ -16,9 +16,12 @@ import axios from "axios";
 import { AuthContext } from "../../context/AuthContext";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useCookies } from "react-cookie";
 
 function Sidebar() {
-  const { user } = useContext(AuthContext);
+  const [cookies] = useCookies(["jwt", "user"]);
+  const { user } = cookies;
+
   const [users, setUsers] = useState([]);
 
   useEffect(() => {

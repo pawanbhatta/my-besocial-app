@@ -58,10 +58,10 @@ function Home() {
       {/* <Topbar /> */}
       <Navbar />
       <div className="homeContainer">
-        {/* <Sidebar /> */}
+        <Sidebar />
         <Feed />
         {username && <ProfileRightbar username={username} />}
-        {/* <HomeRightbar /> */}
+        <HomeRightbar />
       </div>
     </>
   );

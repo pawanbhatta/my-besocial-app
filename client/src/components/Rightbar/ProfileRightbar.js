@@ -4,12 +4,17 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 import { Add, Remove } from "@material-ui/icons";
+import { useCookies } from "react-cookie";
 
 function ProfileRightbar({ username, user }) {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const SI = process.env.REACT_APP_GET_IMAGES;
   const [friends, setFriends] = useState([]);
-  const { user: currentUser, dispatch } = useContext(AuthContext);
+
+  const [cookies, setCookie, removeCookie] = useCookies(["jwt", "user"]);
+  const { user: currentUser } = cookies;
+
+  const { dispatch } = useContext(AuthContext);
   const [isFollowing, setIsFollowing] = useState(
     currentUser.followings.includes(user._id)
   );
@@ -36,20 +41,24 @@ function ProfileRightbar({ username, user }) {
   }, []);
 
   useEffect(() => {
+    console.log("follow see here", currentUser.followings);
     setIsFollowing(currentUser.followings.includes(user._id));
   }, [user._id, currentUser.followings]);
 
   const handleClick = async () => {
     try {
       if (isFollowing) {
-        await axios.put(`/users/${user._id}/unfollow`, {
+        const { data } = await axios.put(`/users/${user._id}/unfollow`, {
           userId: currentUser._id,
         });
+        console.log(data);
+        setCookie("user", data.updatedUser, { secure: true, sameSite: "None" });
         dispatch({ type: "UNFOLLOW", payload: user._id });
       } else {
-        await axios.put(`/users/${user._id}/follow`, {
+        const { data } = await axios.put(`/users/${user._id}/follow`, {
           userId: currentUser._id,
         });
+        setCookie("user", data.updatedUser, { secure: true, sameSite: "None" });
         dispatch({ type: "FOLLOW", payload: user._id });
       }
       setIsFollowing(!isFollowing);
