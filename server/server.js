@@ -254,4 +254,12 @@ app.use("/api/conversations", conversationRoutes);
 app.use("/api/messages", messageRoutes);
 // app.use("/api/images", imageRoutes);
 
-app.listen(APP_PORT, () => console.log(`Server started on port ${APP_PORT}`));
+app.use(express.static(path.join(__dirname, "/client/build")));
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "/client/build", "index.html"));
+});
+
+app.listen(APP_PORT || 5000, () =>
+  console.log(`Server started on port ${APP_PORT}`)
+);
