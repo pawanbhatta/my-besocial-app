@@ -13,7 +13,7 @@ router.delete("/:id", [isAuthenticated], userController.delete);
 router.get("/profile", [isAuthenticated], userController.getUser);
 
 // Get friends
-router.get("/friends", isAuthenticated, userController.getFriends);
+router.get("/friends/:userId", isAuthenticated, userController.getFriends);
 
 // Get all users
 router.get("/all", isAuthenticated, userController.getAllUsers);

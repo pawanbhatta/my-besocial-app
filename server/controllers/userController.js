@@ -81,10 +81,16 @@ const userController = {
   getFriends: async (req, res) => {
     try {
       const username = req.query.username;
+      const userId = req.params.userId;
 
-      const user = await User.findOne({ username: username }).select(
-        "-_v -password -isAdmin -createdAt -updatedAt"
-      );
+      const user = username
+        ? await User.findOne({ username: username }).select(
+            "-_v -password -isAdmin -createdAt -updatedAt"
+          )
+        : await User.findOne({ _id: userId }).select(
+            "-_v -password -isAdmin -createdAt -updatedAt"
+          );
+      let friendList = [];
       const friends = await Promise.all(
         user.followings.map((friendId) => {
           return User.findById(friendId).select(
@@ -92,7 +98,11 @@ const userController = {
           );
         })
       );
-      res.status(200).json(friends);
+      friends.map((friend) => {
+        const { _id, username, profilePicture } = friend;
+        friendList.push({ _id, username, profilePicture });
+      });
+      res.status(200).json(friendList);
     } catch (error) {
       res.status(500).json(error);
     }

@@ -11,6 +11,12 @@ router.post("/", validateConversation, conversationController.create);
 // Get all conversations of a user
 router.get("/:userId", conversationController.getConversation);
 
+// Get conversation includes two userId
+router.get(
+  "/find/:firstUserId/:secondUserId",
+  conversationController.getTwoUsersConversation
+);
+
 // Delete a conversation
 router.delete("/", conversationController.delete);
 

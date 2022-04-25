@@ -54,6 +54,17 @@ const conversationController = {
     }
   },
 
+  getTwoUsersConversation: async (req, res) => {
+    try {
+      const conversation = await Conversation.findOne({
+        members: { $all: [req.params.firstUserId, req.params.secondUserId] },
+      });
+      res.status(200).json(conversation);
+    } catch (error) {
+      res.status(500).send("Server Error: ", error);
+    }
+  },
+
   delete: async (req, res) => {
     console.log(req.body);
     const conversation = await Conversation.findById(req.body.convId);

@@ -115,7 +115,7 @@ const authController = {
         refreshToken: newRefreshToken,
       });
     } catch (err) {
-      throw res.status(500).send("Server Error");
+      return res.status(500).send("Server Error");
     }
   },
 

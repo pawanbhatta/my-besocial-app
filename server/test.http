@@ -35,7 +35,7 @@ Content-Type:application/json
 
 
 ### Get all messages of a conversation
-GET {{API_URL}}/messages/6220777c742ca43804f4a489
+GET {{API_URL}}/messages/6263c9f5a73f5930047ba9b0
 
 
 ### Add a message
@@ -43,7 +43,7 @@ POST {{API_URL}}/messages
 Content-Type: application/json
 
 {
-  "conversationId":"6220777c742ca43804f4a489",
-  "sender":"61ecdbe627623b228cd7406c",
-  "text":"Hello Jaan"
+  "conversationId":"6263c9f5a73f5930047ba9b0",
+  "sender":"6263cdc2a73f5930047ba9c3",
+  "text":"Hii Babby"
 }

@@ -1,20 +1,62 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import "./chatonline.css";
 
-function ChatOnline() {
+function ChatOnline({ onlineUsers, currentId, setCurrentChat }) {
+  const PF = process.env.REACT_APP_PUBLIC_FOLDER;
+  const SI = process.env.REACT_APP_GET_IMAGES;
+
+  const [friends, setFriends] = useState([]);
+  const [onlineFriends, setOnlineFriends] = useState([]);
+
+  useEffect(() => {
+    const getFriends = async () => {
+      const { data } = await axios.get("/users/friends/" + currentId);
+      setFriends(data);
+    };
+    getFriends();
+  }, [currentId]);
+
+  useEffect(() => {
+    setOnlineFriends(friends.filter((f) => onlineUsers.includes(f._id)));
+  }, [friends, onlineUsers]);
+
+  const handleClick = async (user) => {
+    try {
+      const { data } = await axios.get(
+        `/conversations/find/${currentId}/${user._id}`
+      );
+      setCurrentChat(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div className="chatOnline">
-      <div className="chatOnlineFriend">
-        <div className="chatOnlineImgContainer">
-          <img
-            src="https://images.unsplash.com/photo-1529665253569-6d01c0eaf7b6?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8cHJvZmlsZXxlbnwwfHwwfHw%3D&w=1000&q=80"
-            alt=""
-            className="chatOnlineImg"
-          />
-          <div className="chatOnlineBadge"></div>
-        </div>
-        <span className="chatOnlineName">Kamal Bhatta</span>
-      </div>
+      {onlineFriends.map((o) => {
+        return (
+          <div
+            className="chatOnlineFriend"
+            key={o._id}
+            onClick={() => handleClick(o)}
+          >
+            <div className="chatOnlineImgContainer">
+              <img
+                src={
+                  o?.profilePicture
+                    ? SI + "download/" + o.profilePicture
+                    : PF + "person/NoAvatarProfile.png"
+                }
+                alt=""
+                className="chatOnlineImg"
+              />
+              <div className="chatOnlineBadge"></div>
+            </div>
+            <span className="chatOnlineName">{o?.username}</span>
+          </div>
+        );
+      })}
     </div>
   );
 }
