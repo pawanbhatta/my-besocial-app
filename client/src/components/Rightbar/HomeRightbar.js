@@ -20,9 +20,7 @@ function HomeRightbar() {
   useEffect(() => {
     const getFriends = async () => {
       try {
-        const friendList = await axios.get(
-          "/users/friends?username=" + user.username
-        );
+        const friendList = await axios.get("/users/friends/" + user._id);
         setFriends(friendList.data);
       } catch (err) {
         console.log(err);

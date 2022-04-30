@@ -1,0 +1,42 @@
+.comment {
+    margin-bottom: 5px;
+    width: 100%;
+}
+
+.commentField {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.commentData {
+    margin-left: 1em;
+}
+
+.postBottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 10px 10px;
+}
+
+.postBottomLeft {
+    display: flex;
+    align-items: center;
+}
+
+.postBottomRight {
+    display: flex;
+}
+
+.likeIcon {
+    width: 24px;
+    height: 24px;
+    margin-right: 5px;
+    cursor: pointer;
+}
+
+.postLikeCounter {
+    font-size: 15px;
+}

@@ -67,14 +67,8 @@ const postController = {
   react: async (req, res) => {
     try {
       const post = await Post.findById(req.params.id);
-      // if (!post) return res.status(404).json("Post Not Found");
 
       if (!post.likes.includes(req.body.userId)) {
-        // await post.updateOne({
-        //   $push: {
-        //     likes: req.body.userId,
-        //   },
-        // });
         await Post.findOneAndUpdate(
           { _id: req.params.id },
           { $push: { likes: req.body.userId } }

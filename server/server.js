@@ -27,6 +27,7 @@ const authRoutes = require("./routes/auth");
 const postRoutes = require("./routes/posts");
 const messageRoutes = require("./routes/messages");
 const conversationRoutes = require("./routes/conversations");
+const commentRoutes = require("./routes/comments");
 // const imageRoutes = require("./routes/images");
 
 // Create mongo connection
@@ -252,13 +253,15 @@ app.use("/api/auth", authRoutes);
 app.use("/api/posts", postRoutes);
 app.use("/api/conversations", conversationRoutes);
 app.use("/api/messages", messageRoutes);
+app.use("/api/comments", commentRoutes);
 // app.use("/api/images", imageRoutes);
 
-app.use(express.static(path.join(__dirname, "/client/build")));
+// Only Used for deploying app to heroku
+// app.use(express.static(path.join(__dirname, "/client/build")));
 
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "/client/build", "index.html"));
-});
+// app.get("*", (req, res) => {
+//   res.sendFile(path.join(__dirname, "/client/build", "index.html"));
+// });
 
 app.listen(APP_PORT || 5000, () =>
   console.log(`Server started on port ${APP_PORT}`)

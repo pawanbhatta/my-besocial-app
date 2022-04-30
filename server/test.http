@@ -47,3 +47,8 @@ Content-Type: application/json
   "sender":"6263cdc2a73f5930047ba9c3",
   "text":"Hii Babby"
 }
+
+###
+
+GET {{API_URL}}/posts/timeline?email=pawan@gmail.com
+

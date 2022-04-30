@@ -11,6 +11,7 @@ import { AuthContext } from "../../context/AuthContext";
 import { useCookies } from "react-cookie";
 import http from "http";
 import { updatePostCall } from "../../apiCalls";
+import CommentBox from "../CommentBox/CommentBox";
 
 function Post({ post }) {
   const [like, setLike] = useState(post.likes.length);
@@ -32,6 +33,8 @@ function Post({ post }) {
 
   const { dispatch, error } = useContext(AuthContext);
   const [currentPost, setCurrentPost] = useState(post);
+  const [showComments, setShowComments] = useState(false);
+  const [comments, setComments] = useState([]);
 
   const toast = useToast();
 
@@ -76,6 +79,10 @@ function Post({ post }) {
     }
   };
 
+  const showCommentHandler = () => {
+    setShowComments(!showComments);
+  };
+
   const updatePost = async (e) => {
     e.preventDefault();
     setIsUpdating(false);
@@ -93,6 +100,18 @@ function Post({ post }) {
       dispatch({ type: "ERROR", payload: err });
     }
   };
+
+  // useEffect(() => {
+  //   const getComments = async () => {
+  //     try {
+  //       const { data } = await axios.get(`/comments/${post._id}`);
+  //       setComments(data);
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   };
+  //   getComments();
+  // }, [post._id]);
 
   useEffect(() => {
     if (error) {
@@ -221,11 +240,16 @@ function Post({ post }) {
             <span className="postLikeCounter">{like} people liked it</span>
           </div>
           <div className="postBottomRight">
-            <div className="postCommentText">
-              {currentPost.comments} comments
+            <div className="postCommentText" onClick={showCommentHandler}>
+              {currentPost.comments.length} comments
             </div>
           </div>
         </div>
+        {showComments ? (
+          <CommentBox user={currentUser} postId={currentPost._id} />
+        ) : (
+          ""
+        )}
       </div>
     </div>
   );

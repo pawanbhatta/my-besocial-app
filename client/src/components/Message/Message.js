@@ -22,8 +22,6 @@ const Message = ({ message, own, user }) => {
     };
     getUser();
   }, []);
-  console.log("sender", sender);
-  console.log("user", user);
 
   return message ? (
     <div className={own ? "message own" : "message"}>

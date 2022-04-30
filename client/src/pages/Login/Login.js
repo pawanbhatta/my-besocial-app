@@ -18,10 +18,10 @@ function Login() {
     onSuccess: (data) => {
       dispatch({ type: "LOGIN_SUCCESS", payload: data });
       setCookie("jwt", data.accessToken, { secure: true, sameSite: "None" });
-      setCookie("refresh", data.refreshToken, {
-        secure: true,
-        sameSite: "None",
-      });
+      // setCookie("refresh", data.refreshToken, {
+      //   secure: true,
+      //   sameSite: "None",
+      // });
       setCookie("user", data.user, { secure: true, sameSite: "None" });
       navigate("/");
     },

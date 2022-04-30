@@ -8,16 +8,13 @@ F-E B-E Feature
 [-] [-] Delete Post
 [-] [-] Like and Dislike Post
 [-] [-] Follow and Unfollow User
-[+] [+] Chat Messaging + Audio/Video Calling
-Chat Messaging :- 
-1. check if two converstaions are not created with two same members -- done
-2. group chat
-[+] [+] Create Comment
-[+] [+] Update Comment
-[+] [+] Delete Comment
-[+] [+] Like and Dislike Comment
-[+] [+] Follow Request
-[+] [+] Notification System
+[-] [-] Chat Messaging
+[+] [-] Create Comment
+[+] [-] Update Comment
+[+] [-] Delete Comment
+[+] [-] Like and Dislike Comment
+[+] [+] Audio/Video Calling
+[+] [+] Notification System (follow request, comment and likes)
 [+] [+] Settings Page
 [+] [+] Dark Mode
 [+] [+] Theme Change (Color)

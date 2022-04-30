@@ -4,9 +4,7 @@
     "description": "MERN social media application",
     "main": "server.js",
     "scripts": {
-        "start": "node server.js",
-        "heroku-postbuild": "cd client && npm install && npm run build",
-        "dev-start": "nodemon server.js"
+        "start": "nodemon server.js"
     },
     "author": "Pawan Bhatta",
     "license": "ISC",
