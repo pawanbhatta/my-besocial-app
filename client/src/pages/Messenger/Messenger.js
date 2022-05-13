@@ -15,7 +15,7 @@ function Messenger() {
   const [cookies] = useCookies(["user"]);
   const { user } = cookies;
 
-  const [conversations, setConversation] = useState([]);
+  const [conversations, setConversations] = useState([]);
   const [currentChat, setCurrentChat] = useState(null);
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState([]);
@@ -55,13 +55,13 @@ function Messenger() {
     const getConversations = async () => {
       try {
         const res = await axios.get("/conversations/" + user._id);
-        setConversation(res.data);
+        setConversations(res.data);
       } catch (error) {
         console.log(error);
       }
     };
     getConversations();
-  }, [user._id]);
+  }, [user._id, currentChat]);
 
   useEffect(() => {
     const getMessages = async () => {
@@ -77,6 +77,7 @@ function Messenger() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log("currentchat", currentChat);
     const message = {
       sender: user._id,
       text: newMessage,
@@ -93,6 +94,8 @@ function Messenger() {
       text: newMessage,
     });
 
+    handleNotification(newMessage, receiverId);
+
     try {
       const res = await axios.post("/messages", message);
       setMessages([...messages, res.data]);
@@ -102,8 +105,16 @@ function Messenger() {
     }
   };
 
+  const handleNotification = (text, receiver) => {
+    socket.current.emit("sendText", {
+      sender: user._id,
+      receiver,
+      text,
+    });
+  };
+
   const onEnterPress = (e) => {
-    if (e.keyCode == 13 && e.shiftKey == false) {
+    if (e.keyCode === 13 && e.shiftKey === false) {
       handleSubmit(e);
     }
   };
@@ -114,7 +125,7 @@ function Messenger() {
 
   return (
     <>
-      <Navbar />
+      <Navbar socket={socket.current} />
       <div className="messenger">
         <div className="chatMenu">
           <div className="chatMenuWrapper">

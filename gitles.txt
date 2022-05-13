@@ -1,0 +1,45 @@
+git --version
+
+git config --global user.name "Your name"
+git config --global user.email "Your mail"
+
+git init
+ls -a
+
+git status
+git add .  or git add filename  
+
+git status
+git commit -m 'message here'
+
+git status
+git log 
+
+touch index.js
+
+git branch <branch name> // creates new branch
+git branch // lists all branches
+
+// default - master
+
+git checkout <branchName> // creates and enters new branch
+git checkout <commit hash>  // to roll back to whichever commit you want
+
+git log
+
+gir merge <branchname>
+
+.gitignore
+
+
+
+ /// github
+
+git init
+git add .
+git commit -m 'new commit'
+
+git remote add origin "url"
+git remote -v
+
+git push origin master

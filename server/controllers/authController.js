@@ -7,13 +7,13 @@ let refreshTokens = [];
 
 const generateAccessToken = (user) => {
   return jwt.sign({ id: user._id, email: user.email }, "myjsonsecret", {
-    expiresIn: "120m",
+    expiresIn: "1000m",
   });
 };
 
 const generateRefreshToken = (user) => {
   return jwt.sign({ id: user._id, email: user.email }, "myrefreshjsonsecret", {
-    expiresIn: "120m",
+    expiresIn: "1000m",
   });
 };
 
@@ -36,6 +36,12 @@ const authController = {
         username: req.body.username,
         email: req.body.email,
         password: hashedPassword,
+        city: req.body.city,
+        from: req.body.from,
+        desc: req.body.desc,
+        gender: req.body.gender,
+        relation: req.body.relation,
+        interests: req.body.myInterests,
       });
 
       // SAVE USER AND RESPOND
@@ -74,11 +80,18 @@ const authController = {
 
       refreshTokens.push(refreshToken);
 
+      try {
+        await User.findByIdAndUpdate(user._id, {
+          $set: req.body,
+        });
+        return res.status(200).json("Account has been updated");
+      } catch (error) {
+        return res.status(500).json(error);
+      }
+
       return res.status(200).json({ user, accessToken, refreshToken });
     } catch (error) {
       console.log("error :>> ", error);
-      // return next(new CustomErrorHandler.serverError());
-      // res.status(500).json("Server Error Occurred");
     }
   },
 

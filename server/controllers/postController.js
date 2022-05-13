@@ -12,6 +12,16 @@ const postController = {
     }
   },
 
+  getPostsOfType: async (req, res) => {
+    const type = req.query.type;
+    try {
+      const posts = await Post.find({ type });
+      res.status(200).json(posts);
+    } catch (error) {
+      return res.status(500).send(error);
+    }
+  },
+
   update: async (req, res) => {
     try {
       const post = await Post.findById(req.params.id);

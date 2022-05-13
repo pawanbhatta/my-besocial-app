@@ -2,7 +2,7 @@ import { useCookies } from "react-cookie";
 import jwt_decode from "jwt-decode";
 import axios from "axios";
 import { refreshTokenCall } from "../../apiCalls";
-import { useContext, useEffect } from "react";
+import { useState, useContext, useEffect, useRef } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import { useParams } from "react-router";
 import { Topbar, Sidebar, Feed } from "../../components";
@@ -10,11 +10,18 @@ import HomeRightbar from "../../components/Rightbar/HomeRightbar";
 import ProfileRightbar from "../../components/Rightbar/ProfileRightbar";
 import "./styles.css";
 import Navbar from "../../components/Navbar/Navbar";
+import { io } from "socket.io-client";
+import SuggestFriends from "../../components/SuggestFriends/SuggestFriends";
 
 function Home() {
   const { username } = useParams();
   const { dispatch } = useContext(AuthContext);
   const [cookies, setCookie] = useCookies(["jwt", "user", "refresh"]);
+  const socket = useRef();
+  const [onlineUsers, setOnlineUsers] = useState([]);
+  const [showSuggestions, setShowSuggestions] = useState(false);
+
+  const { user } = cookies;
 
   useEffect(() => {
     // Get refresh token
@@ -53,15 +60,33 @@ function Home() {
     );
   }, [cookies, dispatch, setCookie]);
 
+  useEffect(() => {
+    socket.current = io("ws://localhost:8900");
+    socket.current?.emit("addUser", user._id);
+    socket.current?.on("getUsers", (users) => {
+      setOnlineUsers(
+        user.followings?.filter((f) => users.some((u) => u.userId === f))
+      );
+    });
+  }, [user]);
+
   return (
     <>
       {/* <Topbar /> */}
-      <Navbar />
+      <Navbar
+        showSuggestions={showSuggestions}
+        setShowSuggestions={setShowSuggestions}
+        socket={socket.current}
+      />
       <div className="homeContainer">
         <Sidebar />
-        <Feed />
+        {!showSuggestions ? (
+          <Feed socket={socket.current} />
+        ) : (
+          <SuggestFriends />
+        )}
         {username && <ProfileRightbar username={username} />}
-        <HomeRightbar />
+        <HomeRightbar onlineUsers={onlineUsers} />
       </div>
     </>
   );

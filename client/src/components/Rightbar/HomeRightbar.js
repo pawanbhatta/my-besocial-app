@@ -8,7 +8,7 @@ import { useCookies } from "react-cookie";
 import { AuthContext } from "../../context/AuthContext";
 import { Link } from "react-router-dom";
 
-function HomeRightbar() {
+function HomeRightbar({ onlineUsers }) {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const SI = process.env.REACT_APP_GET_IMAGES;
 
@@ -16,18 +16,19 @@ function HomeRightbar() {
   const { user } = cookies;
 
   const [friends, setFriends] = useState([]);
+  const [onlineFriends, setOnlineFriends] = useState([]);
 
   useEffect(() => {
     const getFriends = async () => {
-      try {
-        const friendList = await axios.get("/users/friends/" + user._id);
-        setFriends(friendList.data);
-      } catch (err) {
-        console.log(err);
-      }
+      const { data } = await axios.get("/users/friends/" + user._id);
+      setFriends(data);
     };
     getFriends();
-  }, []);
+  }, [user._id]);
+
+  useEffect(() => {
+    setOnlineFriends(friends.filter((f) => onlineUsers.includes(f._id)));
+  }, [friends, onlineUsers]);
 
   return (
     <div className="rightbar">
@@ -42,7 +43,7 @@ function HomeRightbar() {
         <img src={`${PF}ad.png`} alt="" className="rightbarAd" />
         <h4 className="rightbarTitle">Online Friends</h4>
         <ul className="rightbarFriendList">
-          {friends.map((friend) => (
+          {onlineFriends.map((friend) => (
             <Link
               key={friend._id}
               to={"/profile/" + friend.username}

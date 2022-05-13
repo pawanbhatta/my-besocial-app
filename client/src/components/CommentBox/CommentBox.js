@@ -3,7 +3,7 @@ import Comment from "../Comment/Comment";
 import "./commentBox.css";
 import axios from "axios";
 
-function CommentBox({ user, postId }) {
+function CommentBox({ user, postId, setCommentLength, handleNotification }) {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const SI = process.env.REACT_APP_GET_IMAGES;
 
@@ -31,6 +31,8 @@ function CommentBox({ user, postId }) {
       const { data } = await axios.post("/comments", comment);
       setComments([...comments, data]);
       setNewComment("");
+      setCommentLength((prev) => prev + 1);
+      handleNotification(2);
     } catch (error) {
       console.log(error);
     }
@@ -61,6 +63,7 @@ function CommentBox({ user, postId }) {
           onChange={(e) => setNewComment(e.target.value)}
           value={newComment}
           onKeyDown={onEnterPress}
+          autoFocus
         />
       </div>
       <hr className="hr" />

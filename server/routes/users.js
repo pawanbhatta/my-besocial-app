@@ -18,6 +18,27 @@ router.get("/friends/:userId", isAuthenticated, userController.getFriends);
 // Get all users
 router.get("/all", isAuthenticated, userController.getAllUsers);
 
+// suggest by mutual followers
+router.get(
+  "/mutual/followers/suggestions",
+  isAuthenticated,
+  userController.getMutualFriends
+);
+
+// suggest by nearby location
+router.get(
+  "/nearby/location/suggestions",
+  isAuthenticated,
+  userController.friendsNearby
+);
+
+// suggest by mututal interests
+router.get(
+  "/mutual/interests/suggestions",
+  isAuthenticated,
+  userController.friendsByInterests
+);
+
 // FOLLOW A USER
 router.put("/:id/follow", isAuthenticated, userController.follow);
 

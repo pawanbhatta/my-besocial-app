@@ -1,5 +1,11 @@
 .feed {
-  flex: 5.5;
-  /* flex: 1; */
-  /* width: 100%; */
+    flex: 5.5;
+    /* flex: 1; */
+    /* width: 100%; */
+}
+
+.noPost {
+    font-size: 3em;
+    text-align: center;
+    margin-top: 15%;
 }

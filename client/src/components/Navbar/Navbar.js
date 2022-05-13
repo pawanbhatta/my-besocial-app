@@ -15,13 +15,17 @@ import { useCookies } from "react-cookie";
 import { useEffect } from "react";
 import axios from "axios";
 
-function Navbar() {
+function Navbar({ showSuggestions, setShowSuggestions, socket }) {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const SI = process.env.REACT_APP_GET_IMAGES;
 
   const [showOption, setShowOption] = useState(false);
   const [query, setQuery] = useState("");
   const [data, setData] = useState([]);
+  const [notifications, setNotifications] = useState([]);
+  const [messageNotifications, setMessageNotifications] = useState([]);
+  const [open, setOpen] = useState(false);
+  const [notifsender, setNotifSender] = useState(null);
 
   const navigate = useNavigate();
   const { dispatch } = useContext(AuthContext);
@@ -46,6 +50,56 @@ function Navbar() {
     if (query.length > 1) fetchData();
     if (query.length < 2) setData([]);
   }, [query]);
+
+  useEffect(() => {
+    socket?.on("getNotification", (data) => {
+      setNotifications((prev) => [...prev, data]);
+    });
+
+    socket?.on("getText", (data) => {
+      setMessageNotifications((prev) => [...prev, data]);
+    });
+  }, [socket]);
+
+  const displayNotification = ({ sender, type }) => {
+    getSender(sender);
+
+    let action;
+
+    if (type === 1) {
+      action = "liked";
+    } else {
+      action = "commented";
+    }
+    return (
+      <span className="notification">{`${notifsender?.username} ${action} your post`}</span>
+    );
+  };
+
+  // const displayTextNotification = ({ sender, text }) => {
+  //   getSender(sender);
+  //   return (
+  //     <span className="notification">{`${notifsender?.username}: ${text} `}</span>
+  //   );
+  // };
+
+  const getSender = async (sender) => {
+    try {
+      const { data } = await axios.get(`/users/profile?userId=${sender}`);
+      setNotifSender(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleRead = () => {
+    setNotifications([]);
+    setOpen(false);
+  };
+
+  const handleReadText = () => {
+    setMessageNotifications([]);
+  };
 
   return (
     <div className="nav">
@@ -111,24 +165,51 @@ function Navbar() {
       </div>
 
       <div className="navBottom">
-        <div className="menuItem">
+        <div className="menuItem" onClick={() => setShowSuggestions(false)}>
           <Link to="/" style={{ textDecoration: "none" }}>
             <Home />
           </Link>
         </div>
-        <div className="menuItem">
+        <div
+          className="menuItem"
+          onClick={() => setShowSuggestions(!showSuggestions)}
+        >
           <Person />
-          <span className="topbarIconBadge">1</span>
+          {/* <span className="topbarIconBadge">1</span> */}
         </div>
         <div className="menuItem">
-          <Link to="/messenger" style={{ textDecoration: "none" }}>
+          <Link
+            to="/messenger"
+            style={{ textDecoration: "none" }}
+            onClick={() => setShowSuggestions(false)}
+          >
             <ForumTwoTone />
-            <span className="topbarIconBadge">1</span>
+            {messageNotifications.length > 0 && (
+              <span className="topbarIconBadge" onClick={handleReadText}>
+                {messageNotifications.length}
+              </span>
+            )}
           </Link>
         </div>
-        <div className="menuItem">
+        <div className="menuItem" onClick={() => setOpen(!open)}>
           <NotificationImportant />
-          <span className="topbarIconBadge">1</span>
+          {notifications.length > 0 && (
+            <span className="topbarIconBadge" onClick={handleRead}>
+              {notifications.length}
+            </span>
+          )}
+          {open && (
+            <div className="notifications">
+              {notifications.map((n) => displayNotification(n))}
+              {notifications.length > 0 ? (
+                <button className="nButton" onClick={handleRead}>
+                  Mark as read
+                </button>
+              ) : (
+                <span className="nButton">No Notifications</span>
+              )}
+            </div>
+          )}
         </div>
       </div>
     </div>

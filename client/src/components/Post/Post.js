@@ -1,6 +1,4 @@
 import { useState, useEffect, useContext, useRef } from "react";
-import * as faceapi from "face-api.js";
-
 import { Cancel, MoreVert } from "@material-ui/icons";
 import "./styles.css";
 import axios from "axios";
@@ -13,7 +11,7 @@ import http from "http";
 import { updatePostCall } from "../../apiCalls";
 import CommentBox from "../CommentBox/CommentBox";
 
-function Post({ post }) {
+function Post({ post, socket }) {
   const [like, setLike] = useState(post.likes.length);
   const [isLiked, setIsLiked] = useState(false);
 
@@ -34,7 +32,9 @@ function Post({ post }) {
   const { dispatch, error } = useContext(AuthContext);
   const [currentPost, setCurrentPost] = useState(post);
   const [showComments, setShowComments] = useState(false);
-  const [comments, setComments] = useState([]);
+  const [commentLength, setCommentLength] = useState(
+    currentPost.comments.length
+  );
 
   const toast = useToast();
 
@@ -43,20 +43,31 @@ function Post({ post }) {
     await http.get("/images/download/" + post.image);
   };
 
+  useEffect(() => {}, [commentLength]);
+
   useEffect(() => {
     setIsLiked(post.likes.includes(currentUser._id));
-  }, [currentUser._id, post.likes]);
+  }, [currentUser._id, currentPost.userId]);
 
-  const likeHandler = async () => {
+  const likeHandler = async (type) => {
     try {
       await axios.put(`/posts/${post._id}/like`, {
         userId: currentUser._id,
       });
+      handleNotification(type);
     } catch (err) {
       console.log(err);
     }
     setLike(isLiked ? like - 1 : like + 1);
     setIsLiked(!isLiked);
+  };
+
+  const handleNotification = (type) => {
+    socket.emit("sendNotification", {
+      sender: currentUser._id,
+      receiver: currentPost.userId,
+      type,
+    });
   };
 
   const deleteHandler = async (e) => {
@@ -225,28 +236,33 @@ function Post({ post }) {
         </div>
         <div className="postBottom">
           <div className="postBottomLeft">
-            <img
+            {/* <img
               src={`${PF}like.png`}
               alt=""
-              onClick={likeHandler}
+              onClick={() => likeHandler(1)}
               className="likeIcon"
-            />
+            /> */}
             <img
-              src={`${PF}heart.png`}
+              src={`${PF}${isLiked ? "fillHeart.svg" : "emptyHeart.svg"}`}
               alt=""
-              onClick={likeHandler}
+              onClick={() => likeHandler(1)}
               className="likeIcon"
             />
             <span className="postLikeCounter">{like} people liked it</span>
           </div>
           <div className="postBottomRight">
             <div className="postCommentText" onClick={showCommentHandler}>
-              {currentPost.comments.length} comments
+              {commentLength} comments
             </div>
           </div>
         </div>
         {showComments ? (
-          <CommentBox user={currentUser} postId={currentPost._id} />
+          <CommentBox
+            handleNotification={handleNotification}
+            user={currentUser}
+            postId={currentPost._id}
+            setCommentLength={setCommentLength}
+          />
         ) : (
           ""
         )}

@@ -109,9 +109,8 @@ const userController = {
   },
 
   getAllUsers: async (req, res) => {
+    const username = req.query.username;
     try {
-      const username = req.query.username;
-
       const allUsers = await User.find().select(
         "-_v -password -isAdmin -createdAt -updatedAt"
       );
@@ -120,6 +119,81 @@ const userController = {
         allUsers.filter((user) => user.username !== username)
       );
       res.status(200).json(users);
+    } catch (error) {
+      res.status(500).json(error);
+    }
+  },
+
+  getMutualFriends: async (req, res) => {
+    try {
+      const followings = await Promise.all(
+        req.user.followings.map(async (u) => {
+          return await User.findById(u);
+        })
+      );
+      let suggestions = [];
+
+      followings.map(async (f) => {
+        const { followings } = f;
+        suggestions.push(...followings);
+      });
+
+      suggestions = [...new Set(suggestions)];
+
+      suggestions = suggestions.filter((s) => s !== req.user._id.toString());
+
+      suggestions = suggestions.filter((s) => {
+        console.log("test", !req.user.followings.includes(s));
+        return !req.user.followings.includes(s);
+      });
+
+      const followSuggestions = await Promise.all(
+        suggestions.map(async (s) => {
+          return await User.findById(s);
+        })
+      );
+      res.status(200).json(followSuggestions);
+    } catch (error) {
+      res.status(500).json(error);
+    }
+  },
+
+  friendsNearby: async (req, res) => {
+    try {
+      const followings = req.user.followings;
+      const allUsers = await User.find({ city: req.user.city });
+      const nearbyFriends = allUsers.filter(
+        (u) => u._id.toString() !== req.user._id.toString()
+      );
+      const nearbySuggestions = nearbyFriends.filter(
+        (f) => !followings.includes(f._id)
+      );
+
+      res.status(200).json(nearbySuggestions);
+    } catch (error) {
+      res.status(500).json(error);
+    }
+  },
+
+  friendsByInterests: async (req, res) => {
+    try {
+      let intCount = 0;
+      let suggestions = [];
+      const followings = req.user.followings;
+      const allUsers = await User.find();
+      const interestedUsers = allUsers.filter(
+        (u) => u._id.toString() !== req.user._id.toString()
+      );
+      interestedUsers.map((f) => {
+        if (!followings.includes(f._id)) {
+          f.interests.map((i) => {
+            if (req.user.interests.includes(i)) intCount++;
+          });
+          if (intCount > 3) suggestions.push(f);
+        }
+      });
+
+      res.status(200).json(suggestions);
     } catch (error) {
       res.status(500).json(error);
     }

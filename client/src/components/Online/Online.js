@@ -9,7 +9,7 @@ function Online({ user }) {
       <div className="rightbarProfileImageContainer">
         <img
           src={
-            user.profilePicture
+            user?.profilePicture
               ? SI + "download/" + user.profilePicture
               : PF + "person/NoAvatarProfile.png"
           }
@@ -18,7 +18,7 @@ function Online({ user }) {
         />
         <span className="rightbarOnlineBadge"></span>
       </div>
-      <span className="rightbarUsername">{user.username}</span>
+      <span className="rightbarUsername">{user?.username}</span>
     </li>
   );
 }

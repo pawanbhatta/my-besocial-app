@@ -51,7 +51,7 @@ const UserSchema = new mongoose.Schema(
     },
     desc: {
       type: String,
-      max: 50,
+      max: 500,
       default: "",
     },
     city: {
@@ -65,8 +65,18 @@ const UserSchema = new mongoose.Schema(
       min: 3,
     },
     relationship: {
-      type: Number,
-      enum: [1, 2, 3],
+      type: String,
+      // enum: [1, 2, 3],
+      default: "Single",
+    },
+    gender: {
+      type: String,
+      // enum: [1, 2, 3],
+      default: "Male",
+    },
+    interests: {
+      type: Array,
+      default: [],
     },
   },
   { timestamps: true }

@@ -6,9 +6,9 @@ import { useCookies } from "react-cookie";
 import { loginCall } from "../../apiCalls";
 import { AuthContext } from "../../context/AuthContext";
 import { useMutation } from "react-query";
-import "./styles.css";
+import "./login.css";
 
-function Login() {
+function Login({ address }) {
   const { dispatch, isFetching } = useContext(AuthContext);
   const [, setCookie] = useCookies(["jwt", "user", "refresh"]);
   const navigate = useNavigate();
@@ -47,19 +47,17 @@ function Login() {
     await mutateAsync({
       email: email.current.value,
       password: password.current.value,
+      city: address.city,
     });
   };
 
   return (
     <div className="login">
       <div className="loginWrapper">
-        <div className="loginLeft">
+        <div className="loginTop">
           <h3 className="loginLogo">BeSocial</h3>
-          <span className="loginDesc">
-            Connect with friends and the world around you on BeSocial.
-          </span>
         </div>
-        <div className="loginRight">
+        <div className="loginCenter">
           <form className="loginBox" onSubmit={handleSubmit}>
             <input
               ref={email}
@@ -72,29 +70,30 @@ function Login() {
               required
               ref={password}
               type="password"
-              minLength="6"
+              minLength={6}
               placeholder="Password"
               className="loginInput"
             />
-            <button className="loginButton" type="submit" disabled={isFetching}>
+            <hr className="loginSeparator" />
+            <button className="logButton" type="submit" disabled={isFetching}>
               {isFetching ? (
                 <CircularProgress color="secondary" size="20px" />
               ) : (
-                "Log In"
+                "Sign In"
               )}
             </button>
             <span className="loginForgot">Forgot Password?</span>
-            <button
-              className="loginRegisterButton"
-              onClick={registerButtonHandler}
-            >
+            <button className="logButton" onClick={registerButtonHandler}>
               {isFetching ? (
                 <CircularProgress color="secondary" size="20px" />
               ) : (
-                "Create A New Account"
+                "Sign Up"
               )}
             </button>
           </form>
+        </div>
+        <div className="loginBottom">
+          Connect with friends and the world around you on BeSocial.
         </div>
       </div>
     </div>

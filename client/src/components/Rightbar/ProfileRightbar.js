@@ -11,7 +11,7 @@ function ProfileRightbar({ username, user }) {
   const SI = process.env.REACT_APP_GET_IMAGES;
   const [friends, setFriends] = useState([]);
 
-  const [cookies, setCookie, removeCookie] = useCookies(["jwt", "user"]);
+  const [cookies, setCookie] = useCookies(["jwt", "user"]);
   const { user: currentUser } = cookies;
 
   const { dispatch } = useContext(AuthContext);
@@ -20,28 +20,6 @@ function ProfileRightbar({ username, user }) {
   );
 
   useEffect(() => {
-    if (navigator.geolocation) {
-      // navigator.geolocation.watchPosition(function (position) {
-      //   console.log("Latitude is :", position.coords.latitude);
-
-      //   console.log("Longitude is :", position.coords.longitude);
-      // });
-
-      navigator.geolocation.getCurrentPosition(
-        function (position) {
-          console.log("Latitude is :", position.coords.latitude);
-
-          console.log("Longitude is :", position.coords.longitude);
-        },
-        function (error) {
-          console.error("Error Code = " + error.code + " - " + error.message);
-        }
-      );
-    }
-  }, []);
-
-  useEffect(() => {
-    console.log("follow see here", currentUser.followings);
     setIsFollowing(currentUser.followings.includes(user._id));
   }, [user._id, currentUser.followings]);
 
@@ -51,7 +29,6 @@ function ProfileRightbar({ username, user }) {
         const { data } = await axios.put(`/users/${user._id}/unfollow`, {
           userId: currentUser._id,
         });
-        console.log(data);
         setCookie("user", data.updatedUser, { secure: true, sameSite: "None" });
         dispatch({ type: "UNFOLLOW", payload: user._id });
       } else {
@@ -67,19 +44,15 @@ function ProfileRightbar({ username, user }) {
 
   useEffect(() => {
     const getFriends = async () => {
-      // if (username) {
       try {
-        const friendList = await axios.get(
-          "/users/friends?username=" + username
-        );
-        setFriends(friendList.data);
-      } catch (err) {
-        console.log(err);
+        const { data } = await axios.get("/users/friends/" + user?._id);
+        setFriends(data);
+      } catch (error) {
+        console.log(error);
       }
-      // }
     };
     getFriends();
-  }, [username]);
+  }, [user]);
 
   return (
     <div className="rightbar">
@@ -117,7 +90,7 @@ function ProfileRightbar({ username, user }) {
         </div>
         <h4 className="rightbarTitle">User Friends</h4>
         <div className="rightbarFollowings">
-          {friends.length !== 0 &&
+          {friends.length > 0 &&
             friends.map((friend) => (
               <Link
                 key={friend._id}
@@ -127,8 +100,8 @@ function ProfileRightbar({ username, user }) {
                 <div className="rightbarFollowing">
                   <img
                     src={
-                      user.profilePicture
-                        ? SI + "download/" + user.profilePicture
+                      friend?.profilePicture
+                        ? SI + "download/" + friend.profilePicture
                         : PF + "person/NoAvatarProfile.png"
                     }
                     alt=""

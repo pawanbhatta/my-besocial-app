@@ -9,6 +9,9 @@ router.get("/timeline", isAuthenticated, postController.timelinePosts);
 // GET user's all POSTS
 router.get("/profile/:username", isAuthenticated, postController.profilePosts);
 
+// GET user's POSTS of particular TYPE
+router.get("/category", isAuthenticated, postController.getPostsOfType);
+
 // CREATE A POST
 router.post("/", isAuthenticated, postController.create);
 

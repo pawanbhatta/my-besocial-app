@@ -8,6 +8,7 @@ const messageController = {
 
   create: async (req, res) => {
     const message = new Message(req.body);
+    console.log("message", req.body);
     try {
       const savedMessage = await message.save();
       res.status(200).json(savedMessage);
@@ -22,7 +23,6 @@ const messageController = {
       const messages = await Message.find({
         conversationId: req.params.conversationId,
       });
-      console.log("mmmes", messages);
       res.status(200).json(messages);
     } catch (error) {
       res.status(500).send("SErver Error : " + error);

@@ -26,7 +26,15 @@ function ChatOnline({ onlineUsers, currentId, setCurrentChat }) {
       const { data } = await axios.get(
         `/conversations/find/${currentId}/${user._id}`
       );
-      setCurrentChat(data);
+      if (data === null) {
+        const res = await axios.post("/conversations", {
+          senderId: currentId,
+          receiverId: user._id,
+        });
+        setCurrentChat(res.data);
+      } else {
+        setCurrentChat(data);
+      }
     } catch (error) {
       console.log(error);
     }

@@ -1,0 +1,261 @@
+.register {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+}
+
+.registerWrapper {
+    /* background-color: rgb(227, 227, 236); */
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+}
+
+.registerTop {
+    height: 10%;
+    width: 100%;
+    /* background-color: rgb(23, 102, 229); */
+    text-align: center;
+    color: rgb(6, 63, 221);
+    /* box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset; */
+}
+
+.registerLogo {
+    font-size: 3.5em;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+}
+
+.registerCenter {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    height: 80%;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+}
+
+.registerCenterTop {
+    display: flex;
+    height: 70%;
+    margin-bottom: 5%;
+}
+
+.registerLeft,
+.registerRight {
+    flex: 1;
+    padding: 1%;
+    margin: 2%;
+    height: 100%;
+    width: 100%;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+    border-radius: 40px;
+}
+
+.registerLeft {
+    /* background-color: rgb(24, 24, 181); */
+    /* background-color: rgb(196, 196, 201); */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 600px;
+}
+
+.registerBox {
+    /* background-color: rgb(213, 213, 231); */
+    height: 100%;
+    width: 100%;
+    /* color: whitesmoke; */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+
+.inputGroup {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 5px 5px;
+}
+
+.registerInput {
+    background: none;
+    padding: 5px;
+    font-size: 1.3em;
+    margin: .2em;
+    /* background-color: #000000; */
+    /* background-image: linear-gradient(315deg, #047ae8 0%, #0917d1 74%); */
+    color: black;
+    border-radius: 10px;
+}
+
+.shareInput {
+    width: 98%;
+    outline: none;
+    border: none;
+    resize: none;
+    margin-top: 0;
+}
+
+.registerInput:focus {
+    outline: none;
+}
+
+.registerRight {
+    /* background-color: rgb(24, 24, 181); */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    min-width: 600px;
+}
+
+.interestTopic {
+    color: black;
+    font-size: 1.2em;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+}
+
+.interestOptions,
+.interestSelected {
+    height: 50%;
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-around;
+    /* background-color: rgb(58, 58, 238); */
+    color: black;
+    flex-wrap: wrap;
+}
+
+.interest {
+    margin-top: 5px;
+    padding: 10px;
+    border-radius: 10px;
+    justify-content: center;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    text-align: center;
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease 0s;
+    /* background-color: #000000;
+    background-image: linear-gradient(315deg, #047ae8 0%, #0917d1 74%); */
+    /* box-shadow: rgba(120, 46, 240, 0.4) 5px 5px, rgba(88, 46, 240, 0.3) 10px 10px, rgba(114, 46, 240, 0.2) 15px 15px, rgba(46, 111, 240, 0.1) 20px 20px, rgba(46, 59, 240, 0.05) 25px 25px; */
+}
+
+.interest:hover {
+    background-color: #532ee5;
+    box-shadow: 0px 15px 20px rgba(46, 229, 157, 0.4);
+    color: #fff;
+    transform: translateY(-7px);
+}
+
+.interestChoice {
+    color: #532ee5;
+    margin-left: 10px;
+    font-size: 1.2em;
+}
+
+.interestChoice:hover {
+    color: white;
+}
+
+.interestSeparator {
+    height: 5px;
+    width: 100%;
+    background-color: rgb(2, 30, 139);
+}
+
+.registerCenterBottom {
+    height: 20%;
+    /* display: flex; */
+}
+
+.regButton {
+    width: 140px;
+    height: 45px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.3em;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 2.5px;
+    font-weight: 500;
+    color: #000;
+    border: none;
+    padding-top: 5px;
+    background-color: white;
+    border-radius: 45px;
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease 0s;
+    cursor: pointer;
+    outline: none;
+}
+
+.regButton:hover {
+    background-color: #2EE59D;
+    box-shadow: 0px 15px 20px rgba(46, 229, 157, 0.4);
+    color: #fff;
+    transform: translateY(-7px);
+}
+
+.registerForgot {
+    color: black;
+    margin-bottom: 10px;
+}
+
+.registerBottom {
+    height: 10%;
+    width: 100%;
+    text-align: center;
+    background-color: rgb(6, 63, 221);
+    color: white;
+    box-shadow: rgb(204, 219, 232) 3px 3px 6px 0px inset, rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+
+/* css for Gender radio inputs */
+
+label {
+    display: block;
+    color: #7d7d7d;
+}
+
+.floatBlock {
+    margin: 0 1.81em 0 0;
+}
+
+.relationAndGender {
+    margin: 5px 0 0 10px;
+    color: #989898;
+    font-size: 1.1em;
+    display: flex;
+}
+
+.labelish {
+    color: #989898;
+}
+
+.paymentOptions {
+    border: none;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    break-before: always;
+    margin: 0 0 3em 0;
+}
+
+#purchaseOrder {
+    margin: 0 0 2em 0;
+}

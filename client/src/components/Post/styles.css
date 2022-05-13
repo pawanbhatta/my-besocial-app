@@ -1,139 +1,144 @@
 .post {
-  width: 100%;
-  border-radius: 10px;
-  -webkit-box-shadow: 0px 0px 16px -8px rgba(0, 0, 0, 0.68);
-  box-shadow: 0px 0px 16px -8px rgba(0, 0, 0, 0.68);
-  margin-top: 10px;
-  /* margin-left: 10px; */
+    width: 100%;
+    border-radius: 10px;
+    -webkit-box-shadow: 0px 0px 16px -8px rgba(0, 0, 0, 0.68);
+    box-shadow: 0px 0px 16px -8px rgba(0, 0, 0, 0.68);
+    margin-top: 10px;
+    /* margin-left: 10px; */
 }
 
 .postWrapper {
-  padding: 10px;
+    padding: 10px;
 }
 
 .postTop {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .postTopIcon {
-  cursor: pointer;
+    cursor: pointer;
 }
 
 .postTopLeft {
-  display: flex;
-  align-items: center;
+    display: flex;
+    align-items: center;
 }
 
 .postProfileImage {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  object-fit: cover;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
 }
 
 .postUsername {
-  font-size: 15px;
-  font-weight: 500;
-  margin: 0 10px;
+    font-size: 15px;
+    font-weight: 500;
+    margin: 0 10px;
+    text-transform: capitalize;
 }
 
 .postDate {
-  font-size: 12px;
+    font-size: 12px;
 }
 
 .postCenter {
-  margin: 20px 0;
+    margin: 20px 0;
 }
 
 .shareInput {
-  border: none;
-  width: 80%;
+    border: none;
+    width: 80%;
 }
 
 .shareInput:focus {
-  outline: none;
+    outline: none;
 }
 
 .shareImgContainer {
-  padding: 0 20px 10px 20px;
-  position: relative;
+    padding: 0 20px 10px 20px;
+    position: relative;
 }
 
 .shareImg {
-  width: 100%;
-  object-fit: contain;
+    width: 100%;
+    object-fit: contain;
+    cursor: pointer;
 }
 
 .shareCancelImg {
-  position: absolute;
-  top: 0;
-  right: 20px;
-  cursor: pointer;
-  opacity: 0.7;
+    position: absolute;
+    top: 0;
+    right: 20px;
+    cursor: pointer;
+    opacity: 0.7;
 }
 
 .postImage {
-  margin-top: 20px;
-  width: 90%;
-  max-height: 500px;
-  object-fit: contain;
-  /* max-width: 500px; */
+    margin-top: 20px;
+    width: 90%;
+    max-height: 500px;
+    object-fit: contain;
+    cursor: pointer;
+    /* max-width: 500px; */
 }
 
 .updateButton {
-  border: none;
-  outline: none;
-  background-color: greenyellow;
-  color: green;
-  padding: 5px;
-  border-radius: 10px;
-  font-weight: bold;
-  font-size: 1em;
+    border: none;
+    outline: none;
+    background-color: greenyellow;
+    color: green;
+    padding: 5px;
+    border-radius: 10px;
+    font-weight: bold;
+    font-size: 1em;
 }
 
 .updateButton:hover {
-  opacity: 0.8;
-  transition: all 0.5s ease-in-out;
+    opacity: 0.8;
+    transition: all 0.5s ease-in-out;
 }
 
 .postBottom {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .postBottomLeft {
-  display: flex;
-  align-items: center;
+    display: flex;
+    align-items: center;
 }
 
 .postBottomRight {
-  display: flex;
-  /* justify-content: flex-start; */
+    display: flex;
+    /* justify-content: flex-start; */
 }
 
 .likeIcon {
-  width: 24px;
-  height: 24px;
-  margin-right: 5px;
-  cursor: pointer;
+    width: 24px;
+    height: 24px;
+    margin-right: 5px;
+    cursor: pointer;
 }
 
 .postLikeCounter {
-  font-size: 15px;
+    font-size: 15px;
 }
 
 .postCommentText {
-  cursor: pointer;
-  border-bottom: 1px dashed gray;
-  font-size: 15px;
+    cursor: pointer;
+    border-bottom: 1px dashed gray;
+    font-size: 15px;
 }
 
 .postTopRight {
-  position: relative;
+    position: relative;
 }
+
+
 /* 
 .optionss {
   display: flex;
@@ -146,20 +151,20 @@
 } */
 
 .optionsss {
-  background-color: #000000;
-  background-image: linear-gradient(147deg, #000000 0%, #2c3e50 74%);
-  display: flex;
-  flex-direction: column;
-  background-color: black;
-  opacity: 0.9;
-  padding: 3px 6px;
-  border-radius: 10px;
-  position: absolute;
-  bottom: -70px;
-  right: 0px;
+    background-color: #000000;
+    background-image: linear-gradient(147deg, #000000 0%, #2c3e50 74%);
+    display: flex;
+    flex-direction: column;
+    background-color: black;
+    opacity: 0.9;
+    padding: 3px 6px;
+    border-radius: 10px;
+    position: absolute;
+    bottom: -70px;
+    right: 0px;
 }
 
 .option1 {
-  cursor: pointer;
-  padding: 0px 10px 0px 5px;
+    cursor: pointer;
+    padding: 0px 10px 0px 5px;
 }
