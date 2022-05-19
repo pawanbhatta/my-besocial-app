@@ -1,9 +1,19 @@
-@API_URL = http://localhost:5000f ]gbbbbbbbbbbbbb
+@API_URL = http://localhost:8000
 
 
 
 ### Predict face
-GET {{API_URL}}/uploadandpredict
+GET {{API_URL}}/
+
+### Predict topic
+POST {{API_URL}}/api/predicttopic
+
+
+### Predict face
+GET {{API_URL}}/
+
+### test api
+GET https://api-flask-face.herokuapp.com/predict
 
 ### Get all users conversations
 GET {{API_URL}}/conversations/6263c9f5a73f5930047ba9b0

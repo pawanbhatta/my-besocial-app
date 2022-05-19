@@ -7,6 +7,7 @@ import {
   Person,
   Search,
 } from "@material-ui/icons";
+import { CloseFriend } from "../index";
 import { Link } from "react-router-dom";
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router";
@@ -24,6 +25,7 @@ function Navbar({ showSuggestions, setShowSuggestions, socket }) {
   const [data, setData] = useState([]);
   const [notifications, setNotifications] = useState([]);
   const [messageNotifications, setMessageNotifications] = useState([]);
+  const [tagNotifications, setTagNotifications] = useState([]);
   const [open, setOpen] = useState(false);
   const [notifsender, setNotifSender] = useState(null);
 
@@ -56,37 +58,58 @@ function Navbar({ showSuggestions, setShowSuggestions, socket }) {
       setNotifications((prev) => [...prev, data]);
     });
 
+    // socket?.on("getTagNotification", (data) => {
+    //   setNotifications((prev) => [...prev, data]);
+    // });
+
     socket?.on("getText", (data) => {
       setMessageNotifications((prev) => [...prev, data]);
     });
   }, [socket]);
 
-  const displayNotification = ({ sender, type }) => {
-    getSender(sender);
-
+  const displayNotification = (n) => {
+    const nSender = getSender(n.sender);
     let action;
-
-    if (type === 1) {
-      action = "liked";
-    } else {
-      action = "commented";
+    let notifs;
+    if (nSender?._id !== user._id) {
+      if (n.type === "tag") {
+        action = "tagged";
+        console.log("its tag notif", n);
+        notifs = (
+          <span
+            key={n._id}
+            className="notification"
+          >{`${nSender?.username} ${action} you on a post`}</span>
+        );
+        return notifs;
+      } else if (n.type === "comment") {
+        action = "commented";
+      } else {
+        action = "liked";
+      }
     }
-    return (
-      <span className="notification">{`${notifsender?.username} ${action} your post`}</span>
+    notifs = (
+      <span
+        key={n._id}
+        className="notification"
+      >{`${notifsender?.username} ${action} your post`}</span>
     );
+
+    return notifs;
   };
 
-  // const displayTextNotification = ({ sender, text }) => {
-  //   getSender(sender);
-  //   return (
-  //     <span className="notification">{`${notifsender?.username}: ${text} `}</span>
-  //   );
-  // };
+  const displayTextNotification = ({ sender, text }) => {
+    getSender(sender);
+    return (
+      <span className="notification">{`${notifsender?.username}: ${text} `}</span>
+    );
+  };
 
   const getSender = async (sender) => {
     try {
       const { data } = await axios.get(`/users/profile?userId=${sender}`);
       setNotifSender(data);
+      return data;
     } catch (error) {
       console.log(error);
     }
@@ -94,12 +117,29 @@ function Navbar({ showSuggestions, setShowSuggestions, socket }) {
 
   const handleRead = () => {
     setNotifications([]);
+    // setTagNotifications([]);
     setOpen(false);
   };
 
   const handleReadText = () => {
     setMessageNotifications([]);
   };
+
+  // const handleNotificationFetch = () => {
+  //   setOpen(!open);
+  //   console.log("notifs before", notifications);
+
+  //   const fetchNotifications = async () => {
+  //     const res = await axios.get("/posts/taggedfriends");
+  //     // setNotifications(data);
+  //     console.log("got dta", res.data);
+  //     setTagNotifications((prev) => [...prev, data]);
+
+  //     console.log("notifs now", notifications);
+  //   };
+
+  //   fetchNotifications();
+  // };
 
   return (
     <div className="nav">
@@ -122,7 +162,17 @@ function Navbar({ showSuggestions, setShowSuggestions, socket }) {
           {data.length > 0
             ? data.map((item) => (
                 <li style={{ listStyleType: "none" }} key={item._id}>
-                  {item.username || item.desc}
+                  {item.username ? (
+                    <Link
+                      key={item._id}
+                      to={`/profile/${item.username}`}
+                      style={{ paddingTop: "5px" }}
+                    >
+                      <CloseFriend user={item} />
+                    </Link>
+                  ) : (
+                    item.desc
+                  )}
                 </li>
               ))
             : ""}
@@ -191,22 +241,34 @@ function Navbar({ showSuggestions, setShowSuggestions, socket }) {
             )}
           </Link>
         </div>
-        <div className="menuItem" onClick={() => setOpen(!open)}>
+        <div
+          className="menuItem"
+          onClick={() => {
+            setOpen(!open);
+          }}
+        >
           <NotificationImportant />
           {notifications.length > 0 && (
-            <span className="topbarIconBadge" onClick={handleRead}>
-              {notifications.length}
-            </span>
+            <span className="topbarIconBadge">{notifications.length}</span>
           )}
+          {/* {tagNotifications.length > 0 && (
+            <span className="topbarIconBadge" onClick={handleRead}>
+              {tagNotifications.length}
+            </span>
+          )} */}
           {open && (
             <div className="notifications">
-              {notifications.map((n) => displayNotification(n))}
+              {notifications.length > 0 &&
+                notifications.map((n) => displayNotification(n))}
+
               {notifications.length > 0 ? (
                 <button className="nButton" onClick={handleRead}>
                   Mark as read
                 </button>
               ) : (
-                <span className="nButton">No Notifications</span>
+                <span className="nButton" onClick={handleRead}>
+                  No Notifications
+                </span>
               )}
             </div>
           )}

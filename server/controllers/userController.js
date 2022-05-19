@@ -108,6 +108,41 @@ const userController = {
     }
   },
 
+  getTaggedFriends: async (req, res) => {
+    try {
+      const usernames = req.query.usernames.split(",");
+      let friendList = [];
+      let friends = await Promise.all(
+        usernames.map(async (friendId) => {
+          const user = await User.findOne({ username: friendId }).select(
+            "-_v -password -isAdmin -createdAt -updatedAt"
+          );
+
+          return user;
+        })
+      );
+
+      friends = friends.filter((f) => {
+        if (f !== null) {
+          return f._id !== req.user._id;
+        } else return f;
+      });
+
+      friends.map((friend) => {
+        if (friend !== null) {
+          const { _id, username, profilePicture } = friend;
+          friendList.push({ _id, username, profilePicture });
+        } else {
+          friendList.push(friend);
+        }
+      });
+
+      res.status(200).json(friendList);
+    } catch (error) {
+      res.status(500).json(error);
+    }
+  },
+
   getAllUsers: async (req, res) => {
     const username = req.query.username;
     try {
@@ -189,7 +224,7 @@ const userController = {
           f.interests.map((i) => {
             if (req.user.interests.includes(i)) intCount++;
           });
-          if (intCount > 3) suggestions.push(f);
+          if (intCount > 4) suggestions.push(f);
         }
       });
 

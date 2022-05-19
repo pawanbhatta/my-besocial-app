@@ -5,7 +5,9 @@ const io = require("socket.io")(8900, {
 });
 
 let users = [];
+let taggedUsers = [];
 
+// For normal user actions
 const addUser = (userId, socketId) => {
   !users.some((user) => user.userId === userId) &&
     users.push({ userId, socketId });
@@ -19,13 +21,27 @@ const getUser = (userId) => {
   return users.find((user) => user.userId === userId);
 };
 
+// For user tagging
+const addTaggedUser = (userId, socketId) => {
+  !taggedUsers.some((user) => user.userId === userId) &&
+    taggedUsers.push({ userId, socketId });
+};
+
+const removeTaggedUser = (socketId) => {
+  taggedUsers = taggedUsers.filter((user) => user.socketId !== socketId);
+};
+
+const getTaggedUser = (userId) => {
+  return taggedUsers.find((user) => user.userId === userId);
+};
+
 io.on("connection", (socket) => {
   // When connecting
   console.log("A user Connected");
 
   socket.on("addUser", (userId) => {
-    addUser(userId, socket.id);
     io.emit("getUsers", users);
+    addUser(userId, socket.id);
   });
 
   // Send and receive message
@@ -49,6 +65,19 @@ io.on("connection", (socket) => {
     if (receiverUser)
       io.to(receiverUser.socketId).emit("getText", { sender, text });
   });
+
+  // Notification tagging handler
+  // socket.on("sendTagNotification", ({ sender, receivers, type }) => {
+  //   receivers.map((user) => {
+  //     const receiverUser = getTaggedUser(user);
+
+  //     if (receiverUser)
+  //       io.to(receiverUser.socketId).emit("getTagNotification", {
+  //         sender,
+  //         type,
+  //       });
+  //   });
+  // });
 
   // When disconnecting
   socket.on("disconnect", () => {

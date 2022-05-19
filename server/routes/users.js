@@ -15,6 +15,9 @@ router.get("/profile", [isAuthenticated], userController.getUser);
 // Get friends
 router.get("/friends/:userId", isAuthenticated, userController.getFriends);
 
+// Get tagged friends
+router.get("/tagged/friends", isAuthenticated, userController.getTaggedFriends);
+
 // Get all users
 router.get("/all", isAuthenticated, userController.getAllUsers);
 

@@ -1,5 +1,6 @@
 const Post = require("../models/Post");
 const User = require("../models/User");
+const Notification = require("../models/Notification");
 
 const postController = {
   create: async (req, res) => {
@@ -12,11 +13,44 @@ const postController = {
     }
   },
 
+  tagFriends: async (req, res) => {
+    try {
+      // let {receivers} = req.body.receivers;
+      // receivers = receivers.filter(r=>r.)
+      let newNotification = new Notification(req.body);
+
+      const savedNotification = await newNotification.save();
+      return res.status(200).json(savedNotification);
+    } catch (error) {
+      return res.status(500).send(error);
+    }
+  },
+
+  getTaggedFriends: async (req, res) => {
+    try {
+      console.log("tag friends entry");
+      const notifications = await Notification.find({ type: "tag" });
+      console.log("tag friends ", notifications);
+
+      return res.status(200).json(notifications);
+    } catch (error) {
+      return res.status(500).send(error);
+    }
+  },
+
   getPostsOfType: async (req, res) => {
     const type = req.query.type;
+    console.log("type here", req.query.type);
     try {
       const posts = await Post.find({ type });
-      res.status(200).json(posts);
+
+      const followingsPosts = posts.filter(
+        (post) =>
+          req.user.followings.includes(post.userId) ||
+          post.userId.toString() === req.user._id.toString()
+      );
+
+      res.status(200).json(followingsPosts);
     } catch (error) {
       return res.status(500).send(error);
     }

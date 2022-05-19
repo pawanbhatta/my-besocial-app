@@ -44,10 +44,12 @@ function Login({ address }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    let city = "";
+    if (address !== null) city = address?.city;
     await mutateAsync({
       email: email.current.value,
       password: password.current.value,
-      city: address.city,
+      city,
     });
   };
 

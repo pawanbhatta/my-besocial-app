@@ -82,9 +82,12 @@ const authController = {
 
       try {
         await User.findByIdAndUpdate(user._id, {
-          $set: req.body,
+          ...user,
+          city: req.body.city,
         });
-        return res.status(200).json("Account has been updated");
+        return res.status(200).json({ user, accessToken, refreshToken });
+
+        // return res.status(200).json("Account has been updated");
       } catch (error) {
         return res.status(500).json(error);
       }

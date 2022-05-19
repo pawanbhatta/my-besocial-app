@@ -49,12 +49,12 @@ function Post({ post, socket }) {
     setIsLiked(post.likes.includes(currentUser._id));
   }, [currentUser._id, currentPost.userId]);
 
-  const likeHandler = async (type) => {
+  const likeHandler = async () => {
     try {
       await axios.put(`/posts/${post._id}/like`, {
         userId: currentUser._id,
       });
-      handleNotification(type);
+      !isLiked && handleNotification("like");
     } catch (err) {
       console.log(err);
     }
@@ -222,6 +222,17 @@ function Post({ post, socket }) {
           ) : (
             <>
               <span className="postText">{currentPost?.desc}</span>
+              <br />
+              <br />
+              {post.tags.length > 0 && "With :"}
+              {post.tags?.length > 0 &&
+                post.tags?.map((tag) => {
+                  return (
+                    <Link key={tag._id} to={"/profile/" + tag.username}>
+                      <span className="postTag">{tag.username}</span>
+                    </Link>
+                  );
+                })}
               <img
                 src={
                   currentPost.image ? SI + "download/" + currentPost.image : ""
@@ -245,7 +256,7 @@ function Post({ post, socket }) {
             <img
               src={`${PF}${isLiked ? "fillHeart.svg" : "emptyHeart.svg"}`}
               alt=""
-              onClick={() => likeHandler(1)}
+              onClick={likeHandler}
               className="likeIcon"
             />
             <span className="postLikeCounter">{like} people liked it</span>

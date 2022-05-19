@@ -133,10 +133,15 @@ function Register({ address }) {
   }, [errorCall]);
 
   const handleGender = (e) => {
+    console.log(e.target.value);
     setGender(e.target.value);
+    console.log(gender);
   };
+
   const handleRelation = (e) => {
+    console.log(e.target.value);
     setRelation(e.target.value);
+    console.log(relation);
   };
 
   return (

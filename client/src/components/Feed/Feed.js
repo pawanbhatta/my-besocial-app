@@ -43,7 +43,7 @@ function Feed({ socket }) {
     <div className="feed">
       <div className="feedWrapper">
         {/* <StoryReel/> */}
-        {(!username || username === user.username) && <Share />}
+        {(!username || username === user.username) && <Share socket={socket} />}
         {(!username || username === user.username) && (
           <FeedType setType={setType} />
         )}

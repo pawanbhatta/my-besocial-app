@@ -15,6 +15,12 @@ router.get("/category", isAuthenticated, postController.getPostsOfType);
 // CREATE A POST
 router.post("/", isAuthenticated, postController.create);
 
+// Tag friend in A POST
+router.post("/tagfriend", isAuthenticated, postController.tagFriends);
+
+// Get tagged notifications on A POST
+router.get("/taggedfriends", isAuthenticated, postController.getTaggedFriends);
+
 // Get search results
 router.get("/searchData", isAuthenticated, postController.getSearchData);
 

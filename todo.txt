@@ -8,38 +8,48 @@ F-E B-E Feature
 [-] [-] Delete Post
 [-] [-] Like and Dislike Post
 [-] [-] Follow and Unfollow User
-[-] [-] Chat Messaging
-[-] [-] Create Comment
-[-] [-] Update Comment
-[-] [-] Delete Comment
-[-] [-] Like and Dislike Comment
-[-] [-] Notification System (likes(done), message(done), comment, and follow request)
-[+] [+] Suggest friends based on mutual friends && (nearby location || (mutual interests))
-[+] [+] Post filtering using NLP
-[+] [+] Tag friends in post
-[+] [+] Audio/Video Calling
-[+] [+] Settings Page
-[+] [+] Theme Change (Color)
-[+] [+] Search For Friends in messenger
-[+] [+] Open messenger when clicked on Online Friend on home page
-[+] [+] Modify Search on Navbar (allow to click on users name to link that user's profile)
+[-] [-] Chat Messaging 
+[-] [-] Create Comment 
+[-] [-] Update Comment 
+[-] [-] Delete Comment 
+[-] [-] Like and Dislike Comment 
+[-] [-] Notification System (likes(done), message(done), comment, and follow request) 
+[-] [-] Suggest friends based on mutual friends && (nearby location || (mutual interests)) 
+[-] [-] Modify Search on Navbar (allow to click on users name to link that user's profile) 
+[-] [-] Tag friends in post     
+[+] [+] Notification for Tagging friends in post     
+[+] [+] Post filtering using NLP (manually)
+[+] [+] Settings Page  
+[+] [+] Theme Change (Color) 
+[+] [+] Search For Friends in messenger 
+[+] [+] Open messenger when clicked on Online Friend on home page 
+[+] [+] Audio/Video Calling 
 
 ERROR NOTE :: Posts and messages NOTIFICATIONS not working
 
-# FRIEND SUGGESTION
-    1. By mutual friends
-    2. By mutual interests
-    3. By nearby location
+# FRIEND SUGGESTION        
+    1. By mutual friends    // DONE
+    2. By mutual interests  // DONE
+    3. By nearby location   // DONE
 # Feed Preview
-    1. Categorize posts
-    2. Topic modeling
-# Update current location of user in each login 
-1. Posts should have a topic field to categorize posts
-2. Users should be able to view only relevant posts (i.e. show options of post categories (or interest types) on feed) on their feed
-3. Statistical analysis of friends posts based on most words/topics on his/her post
-4. Group People based on mutual interests (word frequency)
+    1. Categorize posts     // DONE
+    2. Topic modeling               // LEFT
 
-NOTE ::: Allow users to choose several interests and suggest friends based on those interests and whenever the user posts something relevent to other users interest send a notification pointing that particular topic of interest on the notification
+0. Update current location of user in each login 
+    // DONE but DOESN'T WORK WHILE OFFLINE
+1. Posts should have a topic field to categorize posts  
+    //DONE but without NLP
+2. Users should be able to view only relevant posts (i.e. show options of post categories (or interest types) on feed) on their feed
+    // DONE
+3. Statistical analysis of friends posts based on most words/topics on his/her post
+
+4. Group People based on mutual interests (word frequency)
+    // DONE (On friends suggestions)
+5. Allow users to choose several interests and suggest friends based on those interests 
+    // Done
+6. Whenever a user posts something mutual to other users interest send a notification pointing that particular topic of interest on the notification
+
+
 
 NOTE:::refresh token is yet to setup
 NOTE:::make a separate contextAPI for posts
@@ -59,11 +69,11 @@ SPECIAL FEATURES
 
 ARTIFICIAL INTELLIGENCE
 
+[-] Face Recognition for auto tagging
+[-] Recommendation System
+[-] Post Filtering using NLP
 [+] Audio Search
-[+] Face Recognition for auto tagging
-[+] Post Filtering using NLP
 [+] Image Search (optional)
-[+] Recommendation System
 [+] Digital Assistant
 
 

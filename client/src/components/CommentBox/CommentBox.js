@@ -32,7 +32,7 @@ function CommentBox({ user, postId, setCommentLength, handleNotification }) {
       setComments([...comments, data]);
       setNewComment("");
       setCommentLength((prev) => prev + 1);
-      handleNotification(2);
+      handleNotification("comment");
     } catch (error) {
       console.log(error);
     }

@@ -101,6 +101,14 @@
     transition: all 0.5s ease-in-out;
 }
 
+.postTag {
+    font-size: 1.1em;
+    color: blue;
+    text-transform: capitalize;
+    margin-left: 5px;
+    cursor: pointer;
+}
+
 .postBottom {
     display: flex;
     align-items: center;
